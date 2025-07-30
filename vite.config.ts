@@ -17,7 +17,10 @@ export default defineConfig({
     }),
     VitePWA({
       registerType: 'autoUpdate',
+      scope: isProd ? '/habeks-explorer/' : '/',
+      base: isProd ? '/habeks-explorer/' : '/',
       workbox: {
+        navigateFallback: isProd ? '/habeks-explorer/' : '/',
         globPatterns: ['**/*.{js,css,html,ico,png,svg,webp}'],
         runtimeCaching: [
           {
