@@ -1,0 +1,23 @@
+{
+  "id": "user_123",
+  "nickname": "CyberExplorer",
+  "email": "explorer@habeks.com",
+  "balance": {
+    "tokens": 2500,
+    "shards": 48,
+    "orbs": 12
+  },
+  "ownedHexes": [
+    "89754e64992ffff",
+    "89754e64996ffff",
+    "891831230bfffff"
+  ],
+  "level": 7,
+  "experience": 2340,
+  "achievements": [
+    "first_purchase",
+    "region_explorer",
+    "token_collector"
+  ],
+  "lastLogin": "2025-07-30T20:12:28.000Z"
+}

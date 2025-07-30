@@ -1,0 +1,42 @@
+{
+  "region": "london",
+  "center": {
+    "latitude": 51.5074,
+    "longitude": -0.1278
+  },
+  "lastUpdated": "2025-07-30T20:12:28.000Z",
+  "tiles": [
+    {
+      "h3Index": "8918312308fffff",
+      "coordinates": { "lat": 51.5074, "lng": -0.1278 },
+      "ownershipStatus": "free",
+      "price": 300,
+      "owner": null,
+      "lastUpdated": 1722369148000
+    },
+    {
+      "h3Index": "8918312309fffff",
+      "coordinates": { "lat": 51.5084, "lng": -0.1268 },
+      "ownershipStatus": "enemy",
+      "price": 350,
+      "owner": "player_uk1",
+      "lastUpdated": 1722369148000
+    },
+    {
+      "h3Index": "891831230afffff",
+      "coordinates": { "lat": 51.5064, "lng": -0.1288 },
+      "ownershipStatus": "free",
+      "price": 280,
+      "owner": null,
+      "lastUpdated": 1722369148000
+    },
+    {
+      "h3Index": "891831230bfffff",
+      "coordinates": { "lat": 51.5094, "lng": -0.1258 },
+      "ownershipStatus": "owned",
+      "price": 400,
+      "owner": "player_123",
+      "lastUpdated": 1722369148000
+    }
+  ]
+}
