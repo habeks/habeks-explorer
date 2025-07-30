@@ -377,6 +377,16 @@ export const ARCollectionPage: React.FC<ARCollectionPageProps> = ({
 
   return (
     <div className="h-full flex flex-col bg-bg-primary">
+      {/* Видео элемент - всегда в DOM для videoRef */}
+      <video
+        ref={videoRef}
+        playsInline
+        muted
+        className={`w-full h-full object-cover absolute inset-0 z-10 ${
+          isCameraActive ? 'block' : 'hidden'
+        }`}
+      />
+      
       {/* Контрольная панель */}
       <div className="glass-panel m-4 p-4">
         <div className="flex justify-between items-center mb-4">
@@ -480,16 +490,10 @@ export const ARCollectionPage: React.FC<ARCollectionPageProps> = ({
               </div>
             )}
             
-            {/* Видео поток */}
-            <video
-              ref={videoRef}
-              playsInline
-              muted
-              className="w-full h-full object-cover"
-            />
+            {/* Видео отображается через основной видео элемент поверх всего */}
             
-            {/* AR Overlay */}
-            <div className="ar-overlay absolute inset-0">
+            {/* AR Overlay - поверх видео */}
+            <div className="ar-overlay absolute inset-0 z-20">
               {/* Прицел */}
               <div className="ar-crosshair">
                 <CrosshairIcon size={40} className="text-neon-blue" />
