@@ -1,0 +1,112 @@
+{
+  "game": {
+    "version": "1.0.0",
+    "name": "Habeks Explorer",
+    "description": "Cyberpunk AR-исследователь с гексагональными тайлами",
+    "region": "moscow_center"
+  },
+  "economy": {
+    "currencies": {
+      "tokens": {
+        "name": "Токены",
+        "icon": "🪙",
+        "maxAmount": 999999,
+        "startingAmount": 5000
+      },
+      "shards": {
+        "name": "Шарды",
+        "icon": "💎",
+        "maxAmount": 99999,
+        "startingAmount": 500
+      },
+      "orbs": {
+        "name": "Сферы",
+        "icon": "🔮",
+        "maxAmount": 9999,
+        "startingAmount": 50
+      }
+    },
+    "resources": {
+      "oil": {
+        "name": "Нефть",
+        "icon": "🛢️",
+        "basePrice": 15,
+        "volatility": 0.2
+      },
+      "gas": {
+        "name": "Газ",
+        "icon": "💨",
+        "basePrice": 12,
+        "volatility": 0.25
+      },
+      "gold": {
+        "name": "Золото",
+        "icon": "🥇",
+        "basePrice": 100,
+        "volatility": 0.1
+      },
+      "silver": {
+        "name": "Серебро",
+        "icon": "🥈",
+        "basePrice": 25,
+        "volatility": 0.15
+      },
+      "stone": {
+        "name": "Камень",
+        "icon": "🪨",
+        "basePrice": 3,
+        "volatility": 0.05
+      },
+      "wood": {
+        "name": "Дерево",
+        "icon": "🪵",
+        "basePrice": 5,
+        "volatility": 0.08
+      }
+    }
+  },
+  "gameplay": {
+    "hexTiles": {
+      "basePurchasePrice": 1000,
+      "bulkDiscountPercent": 15,
+      "maxBulkPurchase": 37
+    },
+    "arCollection": {
+      "scanCost": 10,
+      "scanCooldown": 30,
+      "maxScanRadius": 100,
+      "defaultScanRadius": 50
+    },
+    "movement": {
+      "detectionThreshold": 0.5,
+      "captureInterruptOnMovement": true
+    }
+  },
+  "regions": {
+    "moscow_center": {
+      "name": "Центр Москвы",
+      "bounds": {
+        "north": 55.8,
+        "south": 55.7,
+        "east": 37.7,
+        "west": 37.5
+      },
+      "defaultCenter": [55.7558, 37.6173],
+      "defaultZoom": 12
+    }
+  },
+  "ar": {
+    "supportedDevices": ["mobile", "tablet"],
+    "requiresHttps": true,
+    "fallbackMode": "2d_simulation",
+    "maxObjectsPerScan": 5,
+    "spawnRadius": 50
+  },
+  "pwa": {
+    "name": "Habeks Explorer",
+    "shortName": "Habeks",
+    "themeColor": "#00d4ff",
+    "backgroundColor": "#0a0a0a",
+    "orientation": "portrait"
+  }
+}

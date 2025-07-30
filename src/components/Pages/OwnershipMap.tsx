@@ -165,9 +165,11 @@ export const OwnershipMap: React.FC<OwnershipMapProps> = ({
     setTotalPurchaseCost(cost);
   }, [selectedHexes]);
 
-  // Переключение отображения сетки
+  // Переключение отображения сетки с улучшенной обратной связью
   const handleToggleHexGrid = () => {
-    setShowHexGrid(!showHexGrid);
+    const newState = !showHexGrid;
+    setShowHexGrid(newState);
+    console.log('🌐 Переключение сетки:', newState ? 'ПОКАЗАНО' : 'СКРЫТО');
   };
 
   // Статистика гексов
@@ -216,17 +218,23 @@ export const OwnershipMap: React.FC<OwnershipMapProps> = ({
 
             {/* Правая часть - кнопки управления */}
             <div className="flex items-center space-x-2">
-              {/* Кнопка сетки */}
+              {/* Кнопка переключения сетки - УЛУЧШЕННАЯ */}
               <button
-                className={`p-2 rounded-lg transition-all duration-300 border ${
+                className={`px-3 py-2 rounded-lg transition-all duration-300 border text-sm font-semibold min-w-[80px] ${
                   showHexGrid 
-                    ? 'bg-accent-primary/20 border-accent-primary text-accent-primary shadow-[0_0_12px_rgba(0,212,255,0.4)]' 
-                    : 'bg-dark-secondary/60 border-accent-primary/30 text-text-secondary hover:border-accent-primary hover:text-accent-primary'
+                    ? 'bg-accent-primary/20 border-accent-primary text-accent-primary shadow-[0_0_12px_rgba(0,212,255,0.4)] scale-105' 
+                    : 'bg-dark-secondary/60 border-accent-primary/30 text-text-secondary hover:border-accent-primary hover:text-accent-primary hover:bg-accent-primary/10'
                 }`}
-                onClick={handleToggleHexGrid}
-                title={showHexGrid ? 'Скрыть сетку' : 'Показать сетку'}
+                onClick={() => {
+                  handleToggleHexGrid();
+                  setNotification(showHexGrid ? '🛑 Сетка скрыта' : '🌐 Сетка показана');
+                }}
+                title={showHexGrid ? 'Скрыть гексагональную сетку' : 'Показать гексагональную сетку'}
               >
-                <GridIcon className="w-4 h-4" />
+                <div className="flex items-center space-x-1">
+                  <span className="text-lg">{showHexGrid ? '🛑' : '🌐'}</span>
+                  <span>{showHexGrid ? 'OFF' : 'ON'}</span>
+                </div>
               </button>
 
               {/* Кнопка массовой покупки */}

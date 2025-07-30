@@ -1,61 +1,67 @@
 {
-  "name": "Habeks Explorer - Cyberpunk AR Game",
-  "short_name": "Habeks Explorer",
-  "description": "Cyberpunk AR-игра с гексагональными тайлами и сбором предметов",
+  "name": "Habeks Explorer",
+  "short_name": "Habeks",
+  "description": "Cyberpunk AR-исследователь с гексагональными тайлами и картой владений",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0a0a0a",
-  "theme_color": "#00d4ff",
   "orientation": "portrait",
+  "theme_color": "#00d4ff",
+  "background_color": "#0a0a0a",
   "scope": "/",
   "lang": "ru",
+  "categories": ["games", "entertainment", "utilities"],
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/pwa-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "maskable any"
+      "purpose": "any"
     },
     {
-      "src": "icon-512.png",
+      "src": "/pwa-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "maskable any"
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ],
-  "permissions": [
-    "geolocation",
-    "camera"
+  "screenshots": [
+    {
+      "src": "/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "platform": "wide"
+    }
   ],
   "features": [
-    "cross-origin-isolated"
+    "Cross Platform",
+    "fast",
+    "simple"
   ],
-  "categories": [
-    "games",
-    "entertainment"
-  ],
-  "prefer_related_applications": false,
-  "shortcuts": [
-    {
-      "name": "Карта владений",
-      "short_name": "Карта",
-      "description": "Открыть карту hex-тайлов",
-      "url": "/?tab=ownership",
-      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
-    },
-    {
-      "name": "Исследование",
-      "short_name": "Скан",
-      "description": "Начать сканирование окрестностей",
-      "url": "/?tab=exploration",
-      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
-    },
-    {
-      "name": "AR Сбор",
-      "short_name": "AR",
-      "description": "Открыть AR режим для сбора предметов",
-      "url": "/?tab=ar-collection",
-      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
-    }
-  ]
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "launch_handler": {
+    "client_mode": "auto"
+  }
 }

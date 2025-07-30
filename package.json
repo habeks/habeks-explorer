@@ -1,14 +1,16 @@
 {
-  "name": "react_repo",
+  "name": "habeks-explorer",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+  "homepage": "https://habeks.github.io/habeks-explorer",
   "scripts": {
-    "dev": "yes | pnpm install && vite",
-    "build:preview": "yes | pnpm install && rm -rf node_modules/.vite-temp && tsc -b && vite build",
-    "build": "yes | pnpm install && rm -rf node_modules/.vite-temp && tsc -b && BUILD_MODE=prod vite build",
-    "lint": "yes | pnpm install && eslint .",
-    "preview": "yes | pnpm install && vite preview"
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "build:gh-pages": "tsc -b && vite build --base=/habeks-explorer/",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "deploy": "npm run build:gh-pages && gh-pages -d dist"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
@@ -66,6 +68,10 @@
     "workbox-window": "^7.3.0",
     "zod": "^3.24.1"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/habeks/habeks-explorer.git"
+  },
   "devDependencies": {
     "@eslint/js": "^9.15.0",
     "@types/node": "^22.10.7",
@@ -83,6 +89,8 @@
     "typescript": "~5.6.2",
     "typescript-eslint": "^8.15.0",
     "vite": "^6.0.1",
-    "vite-plugin-source-info": "^1.0.0"
+    "vite-plugin-source-info": "^1.0.0",
+    "gh-pages": "^6.1.1",
+    "vite-plugin-pwa": "^0.20.1"
   }
 }

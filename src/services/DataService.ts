@@ -74,7 +74,7 @@ class DataService {
   }
 
   /**
-   * Загружает hex-тайлы для указанной локации
+   * Загружает hex-тайлы для указанной локации из реальных JSON данных
    */
   public async loadHexTiles(location: Location): Promise<HexTile[]> {
     const region = this.getRegionByCoordinates(location.latitude, location.longitude);
@@ -87,37 +87,59 @@ class DataService {
     }
 
     try {
-      console.log(`🔄 Загрузка hex-тайлов для региона: ${region}...`);
+      console.log(`🔄 Загрузка hex-тайлов из реальных данных...`);
       
-      const response = await fetch(`${this.baseUrl}/hex-tiles-${region}.json`);
+      // Загружаем hex-тайлы из нового JSON файла
+      const response = await fetch(`${this.baseUrl}/hex-tiles.json`);
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       
-      const data: RegionData = await response.json();
+      const data = await response.json();
       
       // Валидация данных
       if (!data.tiles || !Array.isArray(data.tiles)) {
         throw new Error('Некорректный формат данных hex-тайлов');
       }
       
+      // Преобразуем в формат RegionData
+      const regionData: RegionData = {
+        region: region,
+        center: {
+          latitude: location.latitude,
+          longitude: location.longitude
+        },
+        lastUpdated: data.metadata?.lastSynced || new Date().toISOString(),
+        tiles: data.tiles.map((tile: any) => ({
+          h3Index: tile.h3Index,
+          coordinates: tile.coordinates as [number, number],
+          ownershipStatus: tile.ownershipStatus,
+          price: tile.price,
+          owner: tile.owner,
+          resources: tile.resources,
+          lastUpdated: new Date(tile.lastUpdated).getTime()
+        }))
+      };
+      
       // Сохраняем в кэш
-      this.hexCache.set(region, data);
+      this.hexCache.set(region, regionData);
       
-      console.log(`✅ Успешно загружено ${data.tiles.length} hex-тайлов для региона ${region}`);
+      console.log(`✅ Успешно загружено ${regionData.tiles.length} hex-тайлов из реальных данных`);
       
-      return data.tiles;
+      return regionData.tiles;
     } catch (error) {
       console.error('❌ Ошибка при загрузке hex-тайлов:', error);
       
-      // Возвращаем пустой массив в случае ошибки
-      return [];
+      // Fallback: генерируем минимальные тестовые данные
+      const fallbackTiles = this.generateFallbackHexTiles(location);
+      console.log('⚠️ Используем fallback hex-тайлы');
+      return fallbackTiles;
     }
   }
 
   /**
-   * Загружает данные пользователя
+   * Загружает данные пользователя из реального JSON файла
    */
   public async loadUserData(): Promise<UserData | null> {
     // Проверяем кэш
@@ -127,15 +149,32 @@ class DataService {
     }
 
     try {
-      console.log('🔄 Загрузка данных пользователя...');
+      console.log('🔄 Загрузка данных пользователя из реальных данных...');
       
-      const response = await fetch(`${this.baseUrl}/user.json`);
+      const response = await fetch(`${this.baseUrl}/demo-player.json`);
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       
-      const userData: UserData = await response.json();
+      const data = await response.json();
+      
+      // Преобразуем в формат UserData
+      const userData: UserData = {
+        id: data.player.id,
+        nickname: data.player.nickname,
+        email: data.player.email,
+        balance: {
+          tokens: data.currency.tokens,
+          shards: data.currency.shards,
+          orbs: data.currency.orbs
+        },
+        ownedHexes: data.ownedHexes || [],
+        level: data.player.level,
+        experience: data.player.experience,
+        achievements: data.achievements?.map((a: any) => a.id) || [],
+        lastLogin: data.player.lastActive
+      };
       
       // Валидация данных
       if (!userData.id || !userData.nickname) {
@@ -145,7 +184,7 @@ class DataService {
       // Сохраняем в кэш
       this.userCache = userData;
       
-      console.log(`✅ Данные пользователя ${userData.nickname} успешно загружены`);
+      console.log(`✅ Данные пользователя ${userData.nickname} успешно загружены из реальных данных`);
       
       return userData;
     } catch (error) {
@@ -273,19 +312,90 @@ class DataService {
   }
 
   /**
-   * Предзагрузка данных для улучшения производительности
+   * Генерирует fallback hex-тайлы если основные данные недоступны
+   */
+  private generateFallbackHexTiles(location: Location): HexTile[] {
+    const tiles: HexTile[] = [];
+    const count = 5;
+    
+    for (let i = 0; i < count; i++) {
+      const offsetLat = (Math.random() - 0.5) * 0.01; // ±0.005 градуса
+      const offsetLng = (Math.random() - 0.5) * 0.01;
+      
+      tiles.push({
+        h3Index: `fallback_${Date.now()}_${i}`,
+        coordinates: {
+          lat: location.latitude + offsetLat,
+          lng: location.longitude + offsetLng
+        },
+        ownershipStatus: i % 3 === 0 ? 'owned' : i % 3 === 1 ? 'free' : 'enemy',
+        price: 1000 + Math.floor(Math.random() * 1000),
+        owner: i % 3 === 0 ? 'demo_player_123' : i % 3 === 2 ? 'rival_corp' : null,
+        resources: {
+          oil: Math.floor(Math.random() * 50),
+          gas: Math.floor(Math.random() * 30),
+          gold: Math.floor(Math.random() * 10),
+          stone: Math.floor(Math.random() * 100)
+        },
+        lastUpdated: Date.now()
+      });
+    }
+    
+    return tiles;
+  }
+
+  /**
+   * Загружает игровую конфигурацию
+   */
+  public async loadGameConfig(): Promise<any> {
+    try {
+      const response = await fetch(`${this.baseUrl}/game-config.json`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const config = await response.json();
+      console.log('✅ Игровая конфигурация загружена');
+      return config;
+    } catch (error) {
+      console.error('❌ Ошибка при загрузке конфигурации:', error);
+      return null;
+    }
+  }
+
+  /**
+   * Загружает AR предметы
+   */
+  public async loadARItems(): Promise<any[]> {
+    try {
+      const response = await fetch(`${this.baseUrl}/ar-items.json`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      console.log(`✅ Загружено ${data.items?.length || 0} AR предметов`);
+      return data.items || [];
+    } catch (error) {
+      console.error('❌ Ошибка при загрузке AR предметов:', error);
+      return [];
+    }
+  }
+
+  /**
+   * Предзагрузка всех данных для улучшения производительности
    */
   public async preloadData(location: Location): Promise<void> {
     try {
-      console.log('🚀 Предзагрузка данных...');
+      console.log('🚀 Предзагрузка всех данных...');
       
-      // Загружаем hex-тайлы и данные пользователя параллельно
-      const [hexTiles, userData] = await Promise.all([
+      // Загружаем все данные параллельно
+      const [hexTiles, userData, gameConfig, arItems] = await Promise.all([
         this.loadHexTiles(location),
-        this.loadUserData()
+        this.loadUserData(),
+        this.loadGameConfig(),
+        this.loadARItems()
       ]);
       
-      console.log('✅ Предзагрузка данных завершена');
+      console.log('✅ Предзагрузка всех данных завершена');
     } catch (error) {
       console.error('❌ Ошибка при предзагрузке данных:', error);
     }

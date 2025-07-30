@@ -1,0 +1,80 @@
+{
+  "tiles": [
+    {
+      "h3Index": "891f1d4a67fffff",
+      "coordinates": [55.7558, 37.6173],
+      "ownershipStatus": "owned",
+      "price": 1500,
+      "owner": "player_demo_123",
+      "resources": {
+        "oil": 15,
+        "gas": 8,
+        "gold": 2,
+        "stone": 45
+      },
+      "lastUpdated": "2025-07-31T05:00:00Z"
+    },
+    {
+      "h3Index": "891f1d4a63fffff",
+      "coordinates": [55.7578, 37.6193],
+      "ownershipStatus": "free",
+      "price": 1000,
+      "owner": null,
+      "resources": {
+        "oil": 22,
+        "gas": 12,
+        "silver": 8,
+        "wood": 120
+      },
+      "lastUpdated": "2025-07-31T05:00:00Z"
+    },
+    {
+      "h3Index": "891f1d4a6bfffff",
+      "coordinates": [55.7538, 37.6153],
+      "ownershipStatus": "enemy",
+      "price": 2000,
+      "owner": "rival_corp_456",
+      "resources": {
+        "oil": 45,
+        "gas": 25,
+        "gold": 8,
+        "stone": 65
+      },
+      "lastUpdated": "2025-07-31T05:00:00Z"
+    },
+    {
+      "h3Index": "891f1d4a77fffff",
+      "coordinates": [55.7598, 37.6213],
+      "ownershipStatus": "owned",
+      "price": 1800,
+      "owner": "player_demo_123",
+      "resources": {
+        "gas": 18,
+        "silver": 12,
+        "wood": 85,
+        "stone": 35
+      },
+      "lastUpdated": "2025-07-31T05:00:00Z"
+    },
+    {
+      "h3Index": "891f1d4a73fffff",
+      "coordinates": [55.7518, 37.6133],
+      "ownershipStatus": "free",
+      "price": 1200,
+      "owner": null,
+      "resources": {
+        "oil": 28,
+        "gold": 4,
+        "silver": 6,
+        "wood": 95
+      },
+      "lastUpdated": "2025-07-31T05:00:00Z"
+    }
+  ],
+  "metadata": {
+    "totalTiles": 5,
+    "lastSynced": "2025-07-31T05:00:00Z",
+    "region": "moscow_center",
+    "version": "1.0.0"
+  }
+}

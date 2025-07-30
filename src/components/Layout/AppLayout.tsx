@@ -228,17 +228,17 @@ export const AppLayout: React.FC = () => {
             />
           )}
 
-          {/* Основной контент - полноэкранный для карты */}
-          <main className={`${currentTab === 'ownership' ? 'h-full' : 'flex-1'} overflow-hidden relative`}>
+          {/* Основной контент - ВСЕГДА полноэкранный для карты */}
+          <main className={`${currentTab === 'ownership' ? 'absolute inset-0' : 'flex-1'} overflow-hidden relative`}>
             {renderCurrentPage()}
           </main>
 
-          {/* Навигация по вкладкам - плавающая для карты */}
-          <div className={`${currentTab === 'ownership' ? 'fixed bottom-4 left-4 right-4 z-50' : ''}`}>
+          {/* Навигация по вкладкам - ВСЕГДА плавающая поверх карты */}
+          <div className="fixed bottom-4 left-4 right-4 z-[100]">
             <TabNavigation 
               currentTab={currentTab}
               onTabChange={setCurrentTab}
-              isFloating={currentTab === 'ownership'}
+              isFloating={true}
             />
           </div>
         </>

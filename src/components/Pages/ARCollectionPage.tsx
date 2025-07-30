@@ -79,17 +79,22 @@ export const ARCollectionPage: React.FC<ARCollectionPageProps> = ({
     };
   }, [isMoving, activeCapture, movementThreshold]);
 
-  // Запуск камеры с улучшенной обработкой ошибок
+  // Запуск камеры с МАКСИМАЛЬНО улучшенной обработкой ошибок для мобильных
   const startCamera = async () => {
     setLoading(true);
     setError(null);
     
     try {
-      setNotification('Инициализация AR-камеры...');
+      setNotification('🚀 Инициализация AR-камеры...');
+      
+      // Проверяем HTTPS
+      if (window.location.protocol !== 'https:' && window.location.hostname !== 'localhost') {
+        throw new Error('AR камера требует HTTPS соединения. Откройте сайт через https://');
+      }
       
       // Проверяем поддержку MediaDevices API
       if (!navigator.mediaDevices) {
-        throw new Error('MediaDevices API не поддерживается. Попробуйте использовать HTTPS или новый браузер.');
+        throw new Error('Ваш браузер не поддерживает камеру. Обновите браузер или используйте Chrome/Safari.');
       }
       
       if (!navigator.mediaDevices.getUserMedia) {
@@ -468,33 +473,42 @@ export const ARCollectionPage: React.FC<ARCollectionPageProps> = ({
           </div>
         </div>
 
-        {/* Кнопки управления */}
-        <div className="flex space-x-2">
+        {/* Мобильные кнопки управления - БОЛЬШИЕ для удобства */}
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
           <button
-            className={`btn-neon ${isCameraActive ? 'pink' : 'green'}`}
+            className={`btn-neon mobile-touch ${isCameraActive ? 'pink' : 'green'} text-lg py-4 px-6`}
             onClick={isCameraActive ? stopCamera : startCamera}
+            disabled={loading}
           >
-            <div className="flex items-center space-x-2">
-              <CameraIcon size={16} />
-              <span>{isCameraActive ? 'Остановить AR' : 'Запустить AR'}</span>
+            <div className="flex items-center justify-center space-x-3">
+              <CameraIcon size={24} />
+              <span className="font-semibold">
+                {loading ? 'Запуск...' : isCameraActive ? 'Остановить AR' : 'Запустить AR'}
+              </span>
             </div>
           </button>
           
           {activeCapture && (
             <button
-              className="btn-neon pink"
+              className="btn-neon mobile-touch pink text-lg py-4 px-6"
               onClick={cancelCapture}
             >
-              Отменить сбор
+              <div className="flex items-center justify-center space-x-3">
+                <span>❌</span>
+                <span className="font-semibold">Отменить сбор</span>
+              </div>
             </button>
           )}
           
           {isCameraActive && (
             <button
-              className="btn-neon purple"
+              className="btn-neon mobile-touch purple text-lg py-4 px-6"
               onClick={generateARObjects}
             >
-              Обновить объекты
+              <div className="flex items-center justify-center space-x-3">
+                <span>🔄</span>
+                <span className="font-semibold">Обновить объекты</span>
+              </div>
             </button>
           )}
         </div>
@@ -564,8 +578,8 @@ export const ARCollectionPage: React.FC<ARCollectionPageProps> = ({
                 >
                   {/* Основной объект */}
                   <div className={`
-                    w-16 h-16 rounded-full border-4 flex items-center justify-center text-2xl
-                    transition-all duration-300 hover:scale-110
+                    w-20 h-20 sm:w-24 sm:h-24 rounded-full border-4 flex items-center justify-center text-3xl sm:text-4xl
+                    transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer touch-manipulation
                     ${
                       item.rarity === 'legendary' ? 'border-neon-orange bg-neon-orange bg-opacity-20 glow-pulse' :
                       item.rarity === 'epic' ? 'border-neon-purple bg-neon-purple bg-opacity-20' :

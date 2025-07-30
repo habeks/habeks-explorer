@@ -215,6 +215,59 @@ body {
   box-shadow: 0 0 20px var(--neon-pink);
 }
 
+/* Мобильные touch-оптимизированные кнопки */
+.btn-neon.mobile-touch {
+  min-height: 56px; /* Минимальная высота для touch */
+  min-width: 120px;
+  font-size: 1rem;
+  padding: 1rem 1.5rem;
+  border-width: 3px;
+  border-radius: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  touch-action: manipulation;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.btn-neon.mobile-touch:active {
+  transform: scale(0.95);
+  transition: transform 0.1s ease;
+}
+
+.btn-neon.mobile-touch:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Улучшенные AR объекты для touch */
+.ar-object {
+  touch-action: manipulation;
+  -webkit-touch-callout: none;
+  min-width: 80px;
+  min-height: 80px;
+}
+
+.ar-object:active {
+  transform: translate(-50%, -50%) scale(0.95);
+}
+
+/* Touch-friendly размеры на мобильных */
+@media (max-width: 768px) {
+  .ar-object {
+    min-width: 100px;
+    min-height: 100px;
+  }
+  
+  .btn-neon.mobile-touch {
+    min-height: 64px;
+    font-size: 1.1rem;
+    padding: 1.25rem 2rem;
+  }
+}
+
 /* Карточки */
 .cyber-card {
   background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
