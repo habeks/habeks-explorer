@@ -17,7 +17,7 @@ interface HexTileData {
  */
 class HexTileService {
   private cache: Map<string, HexTileData> = new Map();
-  private readonly baseUrl = '/data';
+  private readonly baseUrl = '/habeks-explorer/data';
 
   /**
    * Определяет регион на основе координат
