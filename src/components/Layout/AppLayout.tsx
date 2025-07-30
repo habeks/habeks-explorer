@@ -69,7 +69,7 @@ export const AppLayout: React.FC = () => {
         // Регистрация Service Worker для PWA
         if ('serviceWorker' in navigator) {
           try {
-            await navigator.serviceWorker.register('/sw.js');
+            await navigator.serviceWorker.register(import.meta.env.BASE_URL + 'sw.js');
             console.log('Service Worker зарегистрирован');
           } catch (error) {
             console.error('Ошибка регистрации Service Worker:', error);
