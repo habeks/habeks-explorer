@@ -41,7 +41,7 @@ class DataService {
   private static instance: DataService;
   private hexCache: Map<string, RegionData> = new Map();
   private userCache: UserData | null = null;
-  private readonly baseUrl = '/data';
+  private readonly baseUrl = window.location.hostname === 'localhost' ? '/data' : '/habeks-explorer/data';
 
   private constructor() {}
 
@@ -132,6 +132,7 @@ class DataService {
       console.error('❌ Ошибка при загрузке hex-тайлов:', error);
       
       // Fallback: генерируем минимальные тестовые данные
+      console.log(`⚠️ Ошибка загрузки с baseUrl: ${this.baseUrl}`);
       const fallbackTiles = this.generateFallbackHexTiles(location);
       console.log('⚠️ Используем fallback hex-тайлы');
       return fallbackTiles;

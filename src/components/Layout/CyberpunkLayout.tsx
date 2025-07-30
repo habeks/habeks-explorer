@@ -64,7 +64,7 @@ export const CyberpunkLayout: React.FC = () => {
           setIsAuthenticated(true);
         }
 
-        // Получение геолокации
+        // Получение геолокации с улучшенной обработкой ошибок
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(
             (position) => {
@@ -75,9 +75,28 @@ export const CyberpunkLayout: React.FC = () => {
                 timestamp: Date.now()
               });
               console.log('✅ Геолокация получена:', position.coords);
+              setNotification('📍 Местоположение определено успешно');
             },
             (error) => {
-              console.warn('⚠️ Геолокация недоступна:', error);
+              let errorMessage = '⚠️ Ошибка геолокации';
+              
+              switch (error.code) {
+                case error.PERMISSION_DENIED:
+                  errorMessage = '📍 Доступ к местоположению запрещен. Разрешите в настройках браузера';
+                  break;
+                case error.POSITION_UNAVAILABLE:
+                  errorMessage = '🛰️ Местоположение недоступно. Проверьте настройки GPS';
+                  break;
+                case error.TIMEOUT:
+                  errorMessage = '⏰ Время ожидания местоположения истекло. Попробуйте позже';
+                  break;
+                default:
+                  errorMessage = `⚠️ Ошибка геолокации: ${error.message || 'Неизвестная ошибка'}`;
+              }
+              
+              console.warn('⚠️ Ошибка геолокации:', error);
+              setNotification(`${errorMessage}. Используем Москву по умолчанию`);
+              
               // Fallback к Москве
               setLocation({
                 latitude: 55.7558,
@@ -85,8 +104,21 @@ export const CyberpunkLayout: React.FC = () => {
                 accuracy: 1000,
                 timestamp: Date.now()
               });
+            },
+            {
+              enableHighAccuracy: true,
+              timeout: 10000,
+              maximumAge: 300000 // 5 минут
             }
           );
+        } else {
+          setNotification('📍 Геолокация не поддерживается вашим браузером. Используем Москву');
+          setLocation({
+            latitude: 55.7558,
+            longitude: 37.6173,
+            accuracy: 1000,
+            timestamp: Date.now()
+          });
         }
 
         // Регистрация Service Worker для PWA
