@@ -126,3 +126,52 @@
   transform: translateY(0);
   box-shadow: 0 0 10px var(--neon-blue);
 }
+
+.cyberpunk-button-active {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.6), rgba(168, 85, 247, 0.6));
+  box-shadow: 0 0 20px var(--neon-blue), 0 0 40px var(--neon-blue);
+}
+
+/* ИСПРАВЛЕНИЕ Z-INDEX ДЛЯ OVERLAY ЭЛЕМЕНТОВ */
+.cyberpunk-hud-top {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  z-index: 50;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cyberpunk-hud-bottom {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  z-index: 50;
+  display: flex;
+  justify-content: center;
+}
+
+/* Уведомления */
+.notification-toast {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  z-index: 100;
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.9), rgba(168, 85, 247, 0.9));
+  backdrop-filter: blur(15px);
+  border: 1px solid var(--neon-blue);
+  border-radius: 8px;
+  padding: 16px;
+  color: white;
+  font-weight: 500;
+  box-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+  animation: slideInRight 0.3s ease;
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}

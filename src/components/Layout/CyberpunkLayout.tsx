@@ -211,14 +211,7 @@ export const CyberpunkLayout: React.FC = () => {
       {/* OVERLAY UI ПОВЕРХ КАРТЫ */}
       <div className="overlay-ui">
         {/* ВЕРХНИЙ HUD - Профиль игрока и валюта */}
-        <div className="cyberpunk-hud" style={{
-          top: '20px',
-          left: '20px',
-          right: '20px',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center'
-        }}>
+        <div className="cyberpunk-hud cyberpunk-hud-top">
           {/* Профиль */}
           <div className="flex items-center space-x-4">
             <div className="cyberpunk-hexagon w-12 h-12 flex items-center justify-center">
@@ -244,17 +237,11 @@ export const CyberpunkLayout: React.FC = () => {
         </div>
 
         {/* НИЖНЯЯ НАВИГАЦИЯ - Табы */}
-        <div className="cyberpunk-hud" style={{
-          bottom: '20px',
-          left: '20px',
-          right: '20px',
-          display: 'flex',
-          justifyContent: 'center'
-        }}>
+        <div className="cyberpunk-hud cyberpunk-hud-bottom">
           <div className="flex space-x-2">
             <button
               className={`cyberpunk-button flex items-center space-x-2 ${
-                currentTab === 'ownership' ? 'bg-opacity-60' : ''
+                currentTab === 'ownership' ? 'cyberpunk-button-active' : ''
               }`}
               onClick={() => setCurrentTab('ownership')}
             >
@@ -264,7 +251,7 @@ export const CyberpunkLayout: React.FC = () => {
             
             <button
               className={`cyberpunk-button flex items-center space-x-2 ${
-                currentTab === 'exploration' ? 'bg-opacity-60' : ''
+                currentTab === 'exploration' ? 'cyberpunk-button-active' : ''
               }`}
               onClick={() => setCurrentTab('exploration')}
             >
@@ -274,7 +261,7 @@ export const CyberpunkLayout: React.FC = () => {
             
             <button
               className={`cyberpunk-button flex items-center space-x-2 ${
-                currentTab === 'ar-collection' ? 'bg-opacity-60' : ''
+                currentTab === 'ar-collection' ? 'cyberpunk-button-active' : ''
               }`}
               onClick={() => setCurrentTab('ar-collection')}
             >

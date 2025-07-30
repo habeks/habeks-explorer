@@ -32,43 +32,21 @@ export const MapView: React.FC<MapViewProps> = ({
 
     if (!mapContainer.current) return;
 
-    // Инициализация карты MapLibre GL JS
-    map.current = new maplibregl.Map({
-      container: mapContainer.current,
-      style: {
-        version: 8,
-        name: 'Cyberpunk Dark Map',
-        metadata: {
-          'mapbox:autocomposite': false,
-          'mapbox:type': 'template'
-        },
-        sources: {
-          'osm-tiles': {
-            type: 'raster',
-            tiles: [
-              'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
-            ],
-            tileSize: 256,
-            attribution: '© OpenStreetMap contributors'
-          }
-        },
-        layers: [
-          {
-            id: 'osm-tiles-layer',
-            type: 'raster',
-            source: 'osm-tiles',
-            minzoom: 0,
-            maxzoom: 22
-          }
-        ],
-        glyphs: 'https://fonts.openmaptiles.org/{fontstack}/{range}.pbf'
-      },
-      center: [center.lng, center.lat],
-      zoom: zoom,
-      pitch: 0,
-      bearing: 0,
-      attributionControl: false
-    });
+    // ИСПРАВЛЕННАЯ инициализация карты MapLibre GL JS с простым стилем
+    try {
+      map.current = new maplibregl.Map({
+        container: mapContainer.current,
+        style: 'https://demotiles.maplibre.org/style.json', // Простой рабочий стиль
+        center: [center.lng, center.lat],
+        zoom: zoom,
+        attributionControl: false
+      });
+
+      console.log('✅ MapLibre карта инициализирована успешно');
+    } catch (error) {
+      console.error('❌ Ошибка инициализации MapLibre:', error);
+      return;
+    }
 
     // Добавление контролов навигации
     map.current.addControl(new maplibregl.NavigationControl(), 'top-right');
@@ -79,29 +57,29 @@ export const MapView: React.FC<MapViewProps> = ({
       trackUserLocation: true
     }), 'top-right');
 
-    // Обработчик загрузки карты
-    map.current.on('load', () => {
-      setMapLoaded(true);
-      if (onMapLoad && map.current) {
-        onMapLoad(map.current);
+      // Обработчик загрузки карты
+      map.current.on('load', () => {
+        console.log('✅ Карта загружена успешно');
+        setMapLoaded(true);
+        
+        if (onMapLoad && map.current) {
+          onMapLoad(map.current);
+        }
+        
+        // Применяем темную тему после загрузки
+        if (map.current && map.current.getCanvas) {
+          const canvas = map.current.getCanvas();
+          if (canvas) {
+            canvas.style.filter = 'brightness(0.6) contrast(1.2) saturate(0.8)';
+            console.log('✅ Киберпанк тема применена');
+          }
+        }
+      });
+
+      // Обработчик кликов по карте
+      if (onMapClick) {
+        map.current.on('click', onMapClick);
       }
-    });
-
-    // Обработчик кликов по карте
-    if (onMapClick) {
-      map.current.on('click', onMapClick);
-    }
-
-    // Стилизация карты под cyberpunk тему
-    map.current.on('style.load', () => {
-      if (!map.current) return;
-      
-      // Применение темного фильтра к карте
-      map.current.setPaintProperty('osm-tiles-layer', 'raster-brightness-min', 0.1);
-      map.current.setPaintProperty('osm-tiles-layer', 'raster-brightness-max', 0.4);
-      map.current.setPaintProperty('osm-tiles-layer', 'raster-contrast', 0.8);
-      map.current.setPaintProperty('osm-tiles-layer', 'raster-saturation', 0.5);
-    });
 
     // Cleanup при размонтировании компонента
     return () => {

@@ -79,14 +79,18 @@ export const ARCollectionPage: React.FC<ARCollectionPageProps> = ({
     };
   }, [isMoving, activeCapture, movementThreshold]);
 
-  // Запуск камеры с МАКСИМАЛЬНО улучшенной обработкой ошибок для мобильных
+  // УПРОЩЕННЫЙ запуск AR камеры - базовая логика
   const startCamera = async () => {
     setLoading(true);
     setError(null);
     
-    // Проверяем HTTPS только для production
-    if (window.location.protocol !== 'https:' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
-      setError('🔒 AR камера работает только по HTTPS. Откройте сайт через https://');
+    console.log('📱 Начинаем запуск AR камеры...');
+    
+    // Простая проверка HTTPS для production
+    if (window.location.protocol !== 'https:' && window.location.hostname !== 'localhost') {
+      const errorMsg = '🔒 AR камера требует HTTPS. Откройте сайт через https://';
+      setError(errorMsg);
+      setNotification(errorMsg);
       setLoading(false);
       return;
     }
@@ -94,161 +98,83 @@ export const ARCollectionPage: React.FC<ARCollectionPageProps> = ({
     try {
       setNotification('🚀 Инициализация AR-камеры...');
       
-      // Проверяем HTTPS
-      if (window.location.protocol !== 'https:' && window.location.hostname !== 'localhost') {
-        throw new Error('AR камера требует HTTPS соединения. Откройте сайт через https://');
+      // Простая проверка поддержки API
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        throw new Error('Камера не поддерживается в вашем браузере');
       }
       
-      // Проверяем поддержку MediaDevices API
-      if (!navigator.mediaDevices) {
-        throw new Error('Ваш браузер не поддерживает камеру. Обновите браузер или используйте Chrome/Safari.');
-      }
-      
-      if (!navigator.mediaDevices.getUserMedia) {
-        throw new Error('getUserMedia не поддерживается в вашем браузере');
-      }
-      
-      // Проверяем, что видео элемент существует
       const video = videoRef.current;
       if (!video) {
-        throw new Error('Видео элемент не найден');
+        throw new Error('Ошибка: видео элемент не найден');
       }
       
-      // Останавливаем предыдущий поток если есть
+      // Останавливаем предыдущий поток
       if (currentStreamRef.current) {
         currentStreamRef.current.getTracks().forEach(track => track.stop());
+        currentStreamRef.current = null;
       }
       
-      // Пробуем разные конфигурации камеры для максимальной совместимости
-      const constraints = [
-        // Предпочтительная конфигурация
-        {
-          video: {
-            facingMode: 'environment',
-            width: { ideal: 1280, min: 640 },
-            height: { ideal: 720, min: 480 },
-            frameRate: { ideal: 30, min: 15 }
-          },
-          audio: false
+      // ПРОСТОЙ конфиг для максимальной совместимости
+      const constraints = {
+        video: {
+          facingMode: 'environment', // Задняя камера
+          width: { ideal: 640 },
+          height: { ideal: 480 }
         },
-        // Fallback конфигурация
-        {
-          video: {
-            facingMode: 'environment',
-            width: { ideal: 640 },
-            height: { ideal: 480 }
-          },
-          audio: false
-        },
-        // Минимальная конфигурация
-        {
-          video: {
-            facingMode: 'environment'
-          },
-          audio: false
-        },
-        // Любая камера
-        {
-          video: true,
-          audio: false
-        }
-      ];
+        audio: false
+      };
       
-      let stream: MediaStream | null = null;
-      let lastError: Error | null = null;
+      console.log('📷 Запрашиваем доступ к камере...');
       
-      // Пробуем все конфигурации по порядку
-      for (const constraint of constraints) {
-        try {
-          stream = await navigator.mediaDevices.getUserMedia(constraint);
-          break;
-        } catch (err) {
-          lastError = err instanceof Error ? err : new Error('Неизвестная ошибка');
-          console.warn('Не удалось получить поток с конфигурацией:', constraint, err);
-        }
-      }
+      // Базовый вызов getUserMedia
+      const stream = await navigator.mediaDevices.getUserMedia(constraints);
       
       if (!stream) {
-        throw lastError || new Error('Не удалось получить доступ к камере с любой конфигурацией');
+        throw new Error('Не удалось получить видеопоток');
       }
       
       currentStreamRef.current = stream;
+      console.log('✅ Видеопоток получен успешно');
       
-      // Настройка видео элемента
+      // Настраиваем видео
+      video.srcObject = stream;
       video.muted = true;
       video.playsInline = true;
       video.autoplay = true;
-      video.controls = false;
       
-      // Привязываем поток к видео
-      video.srcObject = stream;
-      
-      // Ждем загрузки метаданных
-      await new Promise<void>((resolve, reject) => {
-        const handleLoadedMetadata = () => {
-          video.removeEventListener('loadedmetadata', handleLoadedMetadata);
-          video.removeEventListener('error', handleError);
-          resolve();
-        };
-        
-        const handleError = (event: Event) => {
-          video.removeEventListener('loadedmetadata', handleLoadedMetadata);
-          video.removeEventListener('error', handleError);
-          reject(new Error('Ошибка загрузки видео метаданных'));
-        };
-        
-        video.addEventListener('loadedmetadata', handleLoadedMetadata);
-        video.addEventListener('error', handleError);
-        
-        // Таймаут на случай если события не сработают
-        setTimeout(() => {
-          video.removeEventListener('loadedmetadata', handleLoadedMetadata);
-          video.removeEventListener('error', handleError);
-          reject(new Error('Таймаут загрузки видео'));
-        }, 10000);
-      });
-      
-      // Запускаем воспроизведение
-      try {
-        await video.play();
-      } catch (playError) {
-        // Для некоторых браузеров нужно взаимодействие пользователя
-        console.warn('Автовоспроизведение заблокировано:', playError);
-        setNotification('Нажмите на экран для активации камеры');
-        
-        // Ждем клика пользователя
-        const playOnUserInteraction = async () => {
-          try {
-            await video.play();
-            document.removeEventListener('click', playOnUserInteraction);
-          } catch (err) {
-            console.error('Ошибка воспроизведения после клика:', err);
-          }
-        };
-        
-        document.addEventListener('click', playOnUserInteraction);
-      }
-      
-      setIsCameraActive(true);
-      generateARObjects();
-      setNotification('AR камера активна! Ищите объекты вокруг себя');
+      // Простое ожидание загрузки и запуск
+      video.onloadedmetadata = () => {
+        video.play().then(() => {
+          console.log('✅ Видео запущено');
+          setIsCameraActive(true);
+          generateARObjects();
+          setNotification('✅ AR камера активна! Нажмите на объекты для сбора');
+        }).catch(playError => {
+          console.warn('⚠️ Нужно взаимодействие пользователя:', playError);
+          setNotification('💆 Нажмите на экран для активации камеры');
+          setIsCameraActive(true);
+          generateARObjects();
+        });
+      };
       
     } catch (error) {
-      console.error('Ошибка запуска камеры:', error);
-      const errorMessage = error instanceof Error ? error.message : 'Неизвестная ошибка камеры';
+      console.error('❌ Ошибка запуска AR камеры:', error);
       
-      // Специфичные сообщения для разных типов ошибок
-      let userMessage = errorMessage;
-      if (errorMessage.includes('Permission denied') || errorMessage.includes('NotAllowedError')) {
-        userMessage = 'Доступ к камере заблокирован. Разрешите доступ к камере в настройках браузера.';
-      } else if (errorMessage.includes('NotFoundError') || errorMessage.includes('DevicesNotFoundError')) {
-        userMessage = 'Камера не найдена. Убедитесь, что камера подключена и не используется другими приложениями.';
-      } else if (errorMessage.includes('NotSupportedError') || errorMessage.includes('ConstraintNotSatisfiedError')) {
-        userMessage = 'Ваша камера не поддерживает необходимые параметры. Попробуйте другое устройство.';
+      let errorMsg = 'Ошибка камеры';
+      
+      if (error instanceof Error) {
+        const msg = error.message;
+        if (msg.includes('Permission') || msg.includes('NotAllowed')) {
+          errorMsg = '📵 Разрешите доступ к камере в настройках браузера';
+        } else if (msg.includes('NotFound')) {
+          errorMsg = '📷 Камера не обнаружена. Проверьте подключение';
+        } else {
+          errorMsg = `⚠️ ${msg}`;
+        }
       }
       
-      setError(userMessage);
-      setNotification(`Ошибка камеры: ${userMessage}`);
+      setError(errorMsg);
+      setNotification(errorMsg);
     } finally {
       setLoading(false);
     }
