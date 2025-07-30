@@ -1,13 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import AppLayout from './components/Layout/AppLayout';
+import CyberpunkLayout from './components/Layout/CyberpunkLayout';
 import './styles/cyberpunk.css';
+import './App.css';
 
 function App() {
   return (
     <Router>
       <div className="App">
-        <AppLayout />
+        <CyberpunkLayout />
       </div>
     </Router>
   );

@@ -1,42 +1,128 @@
+/* HABEKS EXPLORER - КИБЕРПАНК ПОЛНОЭКРАННОЕ AR ПРИЛОЖЕНИЕ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 #root {
-  margin: 0 auto;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.15) 0%, transparent 50%),
+              radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.15) 0%, transparent 50%),
+              radial-gradient(circle at 40% 40%, rgba(120, 200, 255, 0.1) 0%, transparent 50%),
+              linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  position: relative;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+.app {
+  width: 100vw;
+  height: 100vh;
+  font-family: 'Orbitron', 'Exo 2', monospace;
+  color: #ffffff;
+  position: relative;
+  overflow: hidden;
 }
 
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+/* ПОЛНОЭКРАННАЯ КАРТА КАК ОСНОВА */
+.app > .fullscreen-map-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
 }
 
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* OVERLAY МЕНЮ ПОВЕРХ КАРТЫ */
+.app > .overlay-ui {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+  pointer-events: none;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
+.app > .overlay-ui > * {
+  pointer-events: auto;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+/* НЕОНОВЫЕ АКЦЕНТЫ И ГЕКСАГОНАЛЬНЫЕ ЭЛЕМЕНТЫ */
+.cyberpunk-hexagon {
+  clip-path: polygon(30% 0%, 70% 0%, 100% 50%, 70% 100%, 30% 100%, 0% 50%);
+  background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+  box-shadow: 0 0 20px var(--neon-blue), inset 0 0 20px rgba(0, 212, 255, 0.2);
 }
 
-.card {
-  padding: 2em;
+.cyberpunk-glow {
+  box-shadow: 0 0 20px var(--neon-blue), 0 0 40px var(--neon-blue), 0 0 60px var(--neon-blue);
+  animation: pulse-glow 2s infinite alternate;
 }
 
-.read-the-docs {
-  color: #888;
+@keyframes pulse-glow {
+  from { box-shadow: 0 0 20px var(--neon-blue), 0 0 40px var(--neon-blue); }
+  to { box-shadow: 0 0 30px var(--neon-cyan), 0 0 60px var(--neon-cyan), 0 0 90px var(--neon-cyan); }
+}
+
+/* ГЕЙМИФИЦИРОВАННЫЕ ЭЛЕМЕНТЫ */
+.skill-points-display {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(168, 85, 247, 0.1));
+  border: 1px solid var(--neon-blue);
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+}
+
+.radius-indicator {
+  background: radial-gradient(circle, rgba(0, 255, 136, 0.2) 0%, transparent 70%);
+  border: 2px solid var(--neon-green);
+  border-radius: 50%;
+  animation: pulse-radius 3s infinite;
+}
+
+@keyframes pulse-radius {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.1); opacity: 1; }
+}
+
+/* ФУТУРИСТИЧЕСКИЙ HUD */
+.cyberpunk-hud {
+  position: fixed;
+  background: linear-gradient(135deg, rgba(10, 10, 10, 0.8), rgba(26, 26, 26, 0.8));
+  border: 1px solid var(--neon-blue);
+  border-radius: 12px;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 0 30px rgba(0, 212, 255, 0.4), inset 0 0 30px rgba(0, 212, 255, 0.1);
+  padding: 16px;
+}
+
+.cyberpunk-button {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(168, 85, 247, 0.2));
+  border: 1px solid var(--neon-blue);
+  border-radius: 8px;
+  color: #ffffff;
+  padding: 12px 20px;
+  font-family: 'Orbitron', monospace;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.cyberpunk-button:hover {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.4), rgba(168, 85, 247, 0.4));
+  box-shadow: 0 0 20px var(--neon-blue), 0 0 40px var(--neon-blue);
+  transform: translateY(-2px);
+}
+
+.cyberpunk-button:active {
+  transform: translateY(0);
+  box-shadow: 0 0 10px var(--neon-blue);
 }

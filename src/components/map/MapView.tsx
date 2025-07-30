@@ -37,16 +37,11 @@ export const MapView: React.FC<MapViewProps> = ({
       container: mapContainer.current,
       style: {
         version: 8,
-        name: 'OpenStreetMap',
+        name: 'Cyberpunk Dark Map',
         metadata: {
           'mapbox:autocomposite': false,
-          'mapbox:type': 'template',
-          'maputnik:renderer': 'mbgljs'
+          'mapbox:type': 'template'
         },
-        center: [center.lng, center.lat],
-        zoom: zoom,
-        bearing: 0,
-        pitch: 0,
         sources: {
           'osm-tiles': {
             type: 'raster',
@@ -71,7 +66,8 @@ export const MapView: React.FC<MapViewProps> = ({
       center: [center.lng, center.lat],
       zoom: zoom,
       pitch: 0,
-      bearing: 0
+      bearing: 0,
+      attributionControl: false
     });
 
     // Добавление контролов навигации

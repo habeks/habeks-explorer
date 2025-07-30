@@ -84,6 +84,13 @@ export const ARCollectionPage: React.FC<ARCollectionPageProps> = ({
     setLoading(true);
     setError(null);
     
+    // Проверяем HTTPS только для production
+    if (window.location.protocol !== 'https:' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+      setError('🔒 AR камера работает только по HTTPS. Откройте сайт через https://');
+      setLoading(false);
+      return;
+    }
+    
     try {
       setNotification('🚀 Инициализация AR-камеры...');
       
