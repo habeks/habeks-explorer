@@ -1,0 +1,54 @@
+{
+  "leaderboard": {
+    "lastUpdated": "2025-07-31T05:00:00Z",
+    "season": "2025_summer",
+    "rankings": [
+      {
+        "rank": 1,
+        "playerId": "cyber_legend_999",
+        "nickname": "CyberLegend",
+        "level": 25,
+        "totalScore": 15750,
+        "hexesOwned": 47,
+        "itemsCollected": 234,
+        "region": "moscow_center"
+      },
+      {
+        "rank": 2,
+        "playerId": "neon_hunter_888",
+        "nickname": "NeonHunter",
+        "level": 22,
+        "totalScore": 13200,
+        "hexesOwned": 38,
+        "itemsCollected": 198,
+        "region": "moscow_center"
+      },
+      {
+        "rank": 3,
+        "playerId": "quantum_explorer_777",
+        "nickname": "QuantumExplorer",
+        "level": 19,
+        "totalScore": 11800,
+        "hexesOwned": 32,
+        "itemsCollected": 156,
+        "region": "moscow_center"
+      },
+      {
+        "rank": 15,
+        "playerId": "demo_player_123",
+        "nickname": "Кибер Исследователь",
+        "level": 8,
+        "totalScore": 4500,
+        "hexesOwned": 12,
+        "itemsCollected": 47,
+        "region": "moscow_center"
+      }
+    ],
+    "statistics": {
+      "totalPlayers": 1247,
+      "totalHexesOwned": 8934,
+      "totalItemsCollected": 23567,
+      "averageLevel": 12.3
+    }
+  }
+}
