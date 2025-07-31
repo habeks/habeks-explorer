@@ -8,6 +8,7 @@ import {
   LightningIcon,
   CrystalIcon
 } from '../Icons';
+import { MapView } from '../map/MapView';
 import { geolocationService } from '../../services/geolocation';
 import { calculateDistance } from '../../utils/h3Utils';
 
@@ -226,9 +227,18 @@ export const ExplorationPage: React.FC<ExplorationPageProps> = ({
   };
 
   return (
-    <div className="h-full flex flex-col bg-bg-primary">
-      {/* Шапка */}
-      <div className="glass-panel m-4 p-4">
+    <div className="h-full w-full relative bg-dark-primary overflow-hidden">
+      {/* Полноэкранная карта - ИСПРАВЛЕНО */}
+      <div className="absolute inset-0" style={{ width: '100%', height: '100%' }}>
+        <MapView
+          center={location ? { lat: location.latitude, lng: location.longitude } : { lat: 55.7558, lng: 37.6173 }}
+          zoom={12}
+          location={location}
+          showHexGrid={false}
+        />
+      </div>
+      {/* Шапка - ПОВЕРХ карты */}
+      <div className="glass-panel m-4 p-4" style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 40 }}>
         <div className="flex justify-between items-center mb-4">
           <div className="flex items-center space-x-3">
             <RadarIcon size={24} className="text-neon-green" />
@@ -304,97 +314,89 @@ export const ExplorationPage: React.FC<ExplorationPageProps> = ({
         </div>
       </div>
 
-      {/* Основная область - карта */}
-      <div className="flex-1 relative">
-        <div className="w-full h-full bg-bg-secondary cyber-grid relative overflow-hidden">
-          {/* Простое отображение карты */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            {location ? (
-              <div className="relative">
-                {/* Центр (текущее местоположение) */}
-                <div className="w-8 h-8 bg-neon-blue rounded-full border-2 border-white animate-pulse"></div>
+      {/* Оверлей над картой - найденные предметы */}
+      <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 30 }}>
+        <div className="relative w-full h-full flex items-center justify-center">
+          {location && (
+            <>
+              {/* Радиус сканирования */}
+              <div 
+                className="absolute border-2 border-neon-green border-opacity-50 rounded-full"
+                style={{
+                  width: `${scanRadius * 6}px`,
+                  height: `${scanRadius * 6}px`,
+                  transform: 'translate(-50%, -50%)',
+                  left: '50%',
+                  top: '50%'
+                }}
+              ></div>
+              
+              {/* Найденные предметы */}
+              {foundItems.map((item, index) => {
+                const angle = (index * 45) % 360;
+                const distance = 40 + (index % 3) * 25;
+                const x = Math.cos(angle * Math.PI / 180) * distance;
+                const y = Math.sin(angle * Math.PI / 180) * distance;
                 
-                {/* Радиус сканирования */}
-                <div 
-                  className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border-2 border-neon-green border-opacity-50 rounded-full"
-                  style={{
-                    width: `${scanRadius * 4}px`,
-                    height: `${scanRadius * 4}px`
-                  }}
-                ></div>
-                
-                {/* Найденные предметы */}
-                {foundItems.map((item, index) => {
-                  const angle = (index * 45) % 360;
-                  const distance = 20 + (index % 3) * 15;
-                  const x = Math.cos(angle * Math.PI / 180) * distance;
-                  const y = Math.sin(angle * Math.PI / 180) * distance;
-                  
-                  return (
-                    <div
-                      key={item.id}
-                      className={`absolute w-6 h-6 rounded-full border-2 cursor-pointer transition-all hover:scale-125 ${
-                        item.rarity === 'legendary' ? 'bg-neon-orange border-neon-orange glow-pulse' :
-                        item.rarity === 'epic' ? 'bg-neon-purple border-neon-purple' :
-                        item.rarity === 'rare' ? 'bg-neon-blue border-neon-blue' :
-                        item.rarity === 'uncommon' ? 'bg-neon-green border-neon-green' :
-                        'bg-gray-400 border-gray-400'
-                      }`}
-                      style={{
-                        left: `calc(50% + ${x}px)`,
-                        top: `calc(50% + ${y}px)`,
-                        transform: 'translate(-50%, -50%)'
-                      }}
-                      onClick={() => handleCollectItem(item)}
-                      title={item.name}
-                    >
-                      <div className="w-full h-full flex items-center justify-center text-xs">
-                        {item.icon}
-                      </div>
+                return (
+                  <div
+                    key={item.id}
+                    className={`absolute w-8 h-8 rounded-full border-2 cursor-pointer transition-all hover:scale-125 pointer-events-auto ${
+                      item.rarity === 'legendary' ? 'bg-neon-orange border-neon-orange glow-pulse' :
+                      item.rarity === 'epic' ? 'bg-neon-purple border-neon-purple' :
+                      item.rarity === 'rare' ? 'bg-neon-blue border-neon-blue' :
+                      item.rarity === 'uncommon' ? 'bg-neon-green border-neon-green' :
+                      'bg-gray-400 border-gray-400'
+                    }`}
+                    style={{
+                      left: `calc(50% + ${x}px)`,
+                      top: `calc(50% + ${y}px)`,
+                      transform: 'translate(-50%, -50%)'
+                    }}
+                    onClick={() => handleCollectItem(item)}
+                    title={item.name}
+                  >
+                    <div className="w-full h-full flex items-center justify-center text-sm">
+                      {item.icon}
                     </div>
-                  );
-                })}
-              </div>
-            ) : (
-              <div className="text-center">
-                <CompassIcon size={48} className="text-neon-blue opacity-50 mb-4" />
-                <p className="text-text-muted">Определение местоположения...</p>
-              </div>
-            )}
-          </div>
+                  </div>
+                );
+              })}
+            </>
+          )}
+        </div>
+      </div>
           
-          {/* Легенда редкости */}
-          <div className="absolute top-4 right-4 glass-panel p-3">
-            <h4 className="font-heading text-sm mb-2 text-neon-purple">Редкость</h4>
-            <div className="space-y-1 text-xs">
-              <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 bg-gray-400 rounded-full"></div>
-                <span>Обычные</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 bg-neon-green rounded-full"></div>
-                <span>Необычные</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 bg-neon-blue rounded-full"></div>
-                <span>Редкие</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 bg-neon-purple rounded-full"></div>
-                <span>Эпические</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 bg-neon-orange rounded-full"></div>
-                <span>Легендарные</span>
-              </div>
-            </div>
+      {/* Легенда редкости */}
+      <div className="absolute top-20 right-4 glass-panel p-3" style={{ zIndex: 45 }}>
+        <h4 className="font-heading text-sm mb-2 text-neon-purple">Редкость</h4>
+        <div className="space-y-1 text-xs">
+          <div className="flex items-center space-x-2">
+            <div className="w-3 h-3 bg-gray-400 rounded-full"></div>
+            <span>Обычные</span>
+          </div>
+          <div className="flex items-center space-x-2">
+            <div className="w-3 h-3 bg-neon-green rounded-full"></div>
+            <span>Необычные</span>
+          </div>
+          <div className="flex items-center space-x-2">
+            <div className="w-3 h-3 bg-neon-blue rounded-full"></div>
+            <span>Редкие</span>
+          </div>
+          <div className="flex items-center space-x-2">
+            <div className="w-3 h-3 bg-neon-purple rounded-full"></div>
+            <span>Эпические</span>
+          </div>
+          <div className="flex items-center space-x-2">
+            <div className="w-3 h-3 bg-neon-orange rounded-full"></div>
+            <span>Легендарные</span>
           </div>
         </div>
       </div>
 
       {/* Список найденных предметов */}
       {foundItems.length > 0 && (
-        <div className="glass-panel m-4 p-4">
+        <div className="glass-panel m-4 p-4" style={{ position: 'absolute', bottom: 0, left: 0, right: 0, zIndex: 50 }}>
           <h3 className="font-heading text-lg mb-3 text-neon-green">
             Найденные предметы ({foundItems.length})
           </h3>

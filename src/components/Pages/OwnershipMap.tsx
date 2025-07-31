@@ -182,8 +182,8 @@ export const OwnershipMap: React.FC<OwnershipMapProps> = ({
 
   return (
     <div className="h-full w-full relative bg-dark-primary overflow-hidden">
-      {/* Полноэкранная карта */}
-      <div className="absolute inset-0">
+      {/* Полноэкранная карта - ИСПРАВЛЕНО */}
+      <div className="absolute inset-0" style={{ width: '100%', height: '100%' }}>
         <MapView
           center={mapCenter}
           zoom={currentZoom}

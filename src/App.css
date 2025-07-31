@@ -26,7 +26,7 @@
   overflow: hidden;
 }
 
-/* ПОЛНОЭКРАННАЯ КАРТА КАК ОСНОВА */
+/* ПОЛНОЭКРАННАЯ КАРТА КАК ОСНОВА - ИСПРАВЛЕНО */
 .app > .fullscreen-map-container {
   position: absolute;
   top: 0;
@@ -34,6 +34,12 @@
   width: 100vw;
   height: 100vh;
   z-index: 1;
+}
+
+/* ДОЧЕРНИЕ ЭЛЕМЕНТЫ КАРТЫ ДОЛЖНЫ ЗАПОЛНЯТЬ КОНТЕЙНЕР */
+.app > .fullscreen-map-container > * {
+  width: 100%;
+  height: 100%;
 }
 
 /* OVERLAY МЕНЮ ПОВЕРХ КАРТЫ */
@@ -142,6 +148,25 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: nowrap;
+  gap: 1rem;
+}
+
+/* ИСПРАВЛЕНИЕ НАЛОЖЕНИЯ ВАЛЮТЫ */
+.cyberpunk-hud-top .flex {
+  flex-wrap: nowrap;
+  gap: 1rem;
+}
+
+.skill-points-display {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(168, 85, 247, 0.1));
+  border: 1px solid var(--neon-blue);
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+  white-space: nowrap;
+  min-width: fit-content;
+  flex-shrink: 0;
 }
 
 .cyberpunk-hud-bottom {

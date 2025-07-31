@@ -255,15 +255,19 @@ export const CyberpunkLayout: React.FC = () => {
             </div>
           </div>
           
-          {/* Валюта */}
-          <div className="flex space-x-4">
-            <div className="skill-points-display px-3 py-2">
-              <span className="text-neon-green font-mono">{currency.tokens}</span>
-              <span className="text-xs ml-1">ТОКЕНОВ</span>
+          {/* Валюта - ИСПРАВЛЕНО наложение */}
+          <div className="flex space-x-3 flex-shrink-0">
+            <div className="skill-points-display px-3 py-2 min-w-max">
+              <div className="flex flex-col items-center">
+                <span className="text-neon-green font-mono text-sm">{currency.tokens}</span>
+                <span className="text-xs text-text-secondary">ТОКЕНОВ</span>
+              </div>
             </div>
-            <div className="skill-points-display px-3 py-2">
-              <span className="text-neon-purple font-mono">{currency.shards}</span>
-              <span className="text-xs ml-1">ОСКОЛКОВ</span>
+            <div className="skill-points-display px-3 py-2 min-w-max">
+              <div className="flex flex-col items-center">
+                <span className="text-neon-purple font-mono text-sm">{currency.shards}</span>
+                <span className="text-xs text-text-secondary">ОСКОЛКОВ</span>
+              </div>
             </div>
           </div>
         </div>

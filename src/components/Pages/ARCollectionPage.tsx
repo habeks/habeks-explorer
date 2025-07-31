@@ -376,19 +376,27 @@ export const ARCollectionPage: React.FC<ARCollectionPageProps> = ({
   };
 
   return (
-    <div className="h-full flex flex-col bg-bg-primary">
-      {/* Видео элемент - всегда в DOM для videoRef */}
+    <div className="h-full w-full relative bg-bg-primary overflow-hidden">
+      {/* Видео элемент - ИСПРАВЛЕНО для полноэкранного отображения */}
       <video
         ref={videoRef}
         playsInline
         muted
-        className={`w-full h-full object-cover absolute inset-0 z-10 ${
-          isCameraActive ? 'block' : 'hidden'
-        }`}
+        autoPlay
+        style={{
+          width: '100vw',
+          height: '100vh',
+          objectFit: 'cover',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          zIndex: isCameraActive ? 5 : -1
+        }}
+        className={isCameraActive ? 'block' : 'hidden'}
       />
       
-      {/* Контрольная панель */}
-      <div className="glass-panel m-4 p-4">
+      {/* Контрольная панель - ПОВЕРХ видео */}
+      <div className="glass-panel m-4 p-4" style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 20 }}>
         <div className="flex justify-between items-center mb-4">
           <div className="flex items-center space-x-3">
             <CameraIcon size={24} className="text-neon-purple" />
@@ -457,10 +465,10 @@ export const ARCollectionPage: React.FC<ARCollectionPageProps> = ({
         </div>
       </div>
 
-      {/* AR область */}
-      <div className="flex-1 relative">
-        {isCameraActive || loading ? (
-          <div className="ar-camera-container relative w-full h-full overflow-hidden">
+      {/* AR область - ИСПРАВЛЕНО */}
+      <div className="absolute inset-0" style={{ zIndex: isCameraActive ? 15 : 5 }}>
+        {(isCameraActive || loading) ? (
+          <div className="ar-camera-container absolute inset-0 w-full h-full overflow-hidden">
             {loading && (
               <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 z-50">
                 <div className="text-center">
@@ -490,10 +498,8 @@ export const ARCollectionPage: React.FC<ARCollectionPageProps> = ({
               </div>
             )}
             
-            {/* Видео отображается через основной видео элемент поверх всего */}
-            
             {/* AR Overlay - поверх видео */}
-            <div className="ar-overlay absolute inset-0 z-20">
+            <div className="ar-overlay absolute inset-0" style={{ zIndex: 25 }}>
               {/* Прицел */}
               <div className="ar-crosshair">
                 <CrosshairIcon size={40} className="text-neon-blue" />

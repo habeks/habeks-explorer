@@ -32,17 +32,41 @@ export const MapView: React.FC<MapViewProps> = ({
 
     if (!mapContainer.current) return;
 
-    // ИСПРАВЛЕННАЯ инициализация карты MapLibre GL JS с простым стилем
+    // ИСПРАВЛЕННАЯ инициализация карты MapLibre GL JS 
     try {
+      console.log('🟦 Начало инициализации MapLibre карты...');
+      
       map.current = new maplibregl.Map({
         container: mapContainer.current,
-        style: 'https://demotiles.maplibre.org/style.json', // Простой рабочий стиль
+        style: {
+          version: 8,
+          sources: {
+            'osm': {
+              type: 'raster',
+              tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
+              tileSize: 256,
+              attribution: '&copy; OpenStreetMap contributors'
+            }
+          },
+          layers: [
+            {
+              id: 'osm',
+              type: 'raster',
+              source: 'osm'
+            }
+          ]
+        },
         center: [center.lng, center.lat],
         zoom: zoom,
-        attributionControl: false
+        attributionControl: false,
+        doubleClickZoom: true,
+        dragPan: true,
+        dragRotate: false,
+        scrollZoom: true,
+        touchZoomRotate: true
       });
 
-      console.log('✅ MapLibre карта инициализирована успешно');
+      console.log('✅ MapLibre карта создана успешно');
     } catch (error) {
       console.error('❌ Ошибка инициализации MapLibre:', error);
       return;
@@ -131,7 +155,14 @@ export const MapView: React.FC<MapViewProps> = ({
       <div 
         ref={mapContainer} 
         className="w-full h-full rounded-lg overflow-hidden shadow-neon"
-        style={{ minHeight: '400px' }}
+        style={{ 
+          minHeight: '100vh',
+          width: '100%',
+          height: '100%',
+          position: 'absolute',
+          top: 0,
+          left: 0
+        }}
       />
       
       {/* Overlay для HexGrid и других children */}
