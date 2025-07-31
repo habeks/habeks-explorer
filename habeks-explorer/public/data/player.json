@@ -1,0 +1,85 @@
+{
+  "player": {
+    "id": "demo_player_123",
+    "username": "CyberExplorer",
+    "email": "demo@habeks.game",
+    "level": 3,
+    "experience": 450,
+    "experienceToNext": 550,
+    "tokens": 1250,
+    "premiumTokens": 50,
+    "stats": {
+      "hexesOwned": 7,
+      "hexesTotal": 15,
+      "questsCompleted": 5,
+      "arScansPerformed": 23,
+      "totalPlayTime": 145800,
+      "joinDate": "2025-07-20T10:00:00Z",
+      "lastActiveDate": "2025-07-31T05:00:00Z"
+    },
+    "inventory": {
+      "items": [
+        {
+          "id": "basic_scanner",
+          "name": "Базовый сканер",
+          "quantity": 1,
+          "rarity": "common"
+        },
+        {
+          "id": "advanced_scanner",
+          "name": "Продвинутый сканер", 
+          "quantity": 1,
+          "rarity": "rare"
+        },
+        {
+          "id": "energy_cell",
+          "name": "Энергетическая ячейка",
+          "quantity": 3,
+          "rarity": "common"
+        },
+        {
+          "id": "territory_marker",
+          "name": "Территориальный маркер",
+          "quantity": 2,
+          "rarity": "uncommon"
+        }
+      ],
+      "maxCapacity": 50,
+      "currentCapacity": 7
+    },
+    "achievements": [
+      {
+        "id": "first_scan",
+        "name": "Первое сканирование",
+        "description": "Выполнено первое AR сканирование",
+        "unlockedAt": "2025-07-20T12:30:00Z"
+      },
+      {
+        "id": "hex_owner",
+        "name": "Владелец территории",
+        "description": "Приобретен первый гексагональный тайл",
+        "unlockedAt": "2025-07-21T15:45:00Z"
+      }
+    ],
+    "preferences": {
+      "mapStyle": "cyberpunk",
+      "arQuality": "high",
+      "notifications": true,
+      "soundEnabled": true,
+      "language": "ru"
+    },
+    "location": {
+      "currentLocationId": "moscow_center",
+      "lastKnownCoordinates": {
+        "latitude": 55.7558,
+        "longitude": 37.6176,
+        "accuracy": 10,
+        "timestamp": "2025-07-31T05:00:00Z"
+      }
+    }
+  },
+  "metadata": {
+    "version": "1.0.0",
+    "lastUpdated": "2025-07-31T05:13:00Z"
+  }
+}

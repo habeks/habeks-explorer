@@ -1,0 +1,91 @@
+{
+  "player": {
+    "id": "demo_player_123",
+    "nickname": "Кибер Исследователь",
+    "email": "demo@habeks.explorer",
+    "level": 8,
+    "experience": 4500,
+    "experienceToNext": 5500,
+    "createdAt": "2025-07-25T12:00:00Z",
+    "lastActive": "2025-07-31T05:00:00Z",
+    "region": "moscow_center",
+    "stats": {
+      "totalHexesOwned": 12,
+      "totalItemsCollected": 47,
+      "totalDistanceTraveled": 15.7,
+      "arSessionsCompleted": 23,
+      "longestCapture": 12
+    }
+  },
+  "currency": {
+    "tokens": 7500,
+    "shards": 850,
+    "orbs": 75,
+    "oil": 340,
+    "gas": 180,
+    "gold": 15,
+    "silver": 95,
+    "stone": 420,
+    "wood": 280
+  },
+  "inventory": [
+    {
+      "id": "inv_001",
+      "itemId": "ar_item_001",
+      "name": "Кибер Клинок",
+      "type": "weapon",
+      "rarity": "epic",
+      "quantity": 1,
+      "acquiredAt": "2025-07-30T14:30:00Z",
+      "isEquipped": true
+    },
+    {
+      "id": "inv_002",
+      "itemId": "ar_item_003",
+      "name": "Энергокристалл",
+      "type": "resource",
+      "rarity": "uncommon",
+      "quantity": 8,
+      "acquiredAt": "2025-07-29T16:45:00Z",
+      "isEquipped": false
+    },
+    {
+      "id": "inv_003",
+      "itemId": "ar_item_005",
+      "name": "Стимпак",
+      "type": "consumable",
+      "rarity": "common",
+      "quantity": 15,
+      "acquiredAt": "2025-07-28T10:20:00Z",
+      "isEquipped": false
+    }
+  ],
+  "ownedHexes": [
+    "891f1d4a67fffff",
+    "891f1d4a77fffff"
+  ],
+  "achievements": [
+    {
+      "id": "first_hex",
+      "name": "Первый Захват",
+      "description": "Купить первый гексагональный тайл",
+      "unlockedAt": "2025-07-25T15:30:00Z",
+      "icon": "🏆"
+    },
+    {
+      "id": "ar_collector",
+      "name": "AR Коллекционер",
+      "description": "Собрать 25 предметов через AR",
+      "unlockedAt": "2025-07-29T18:45:00Z",
+      "icon": "📱"
+    }
+  ],
+  "preferences": {
+    "theme": "cyberpunk",
+    "soundEffects": true,
+    "vibration": true,
+    "notifications": true,
+    "autoSave": true,
+    "arQuality": "high"
+  }
+}

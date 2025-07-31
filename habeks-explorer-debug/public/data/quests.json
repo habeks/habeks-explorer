@@ -1,0 +1,113 @@
+{
+  "quests": [
+    {
+      "id": "tutorial_first_scan",
+      "title": "Первое сканирование",
+      "description": "Проведите ваше первое AR сканирование территории для поиска скрытых объектов",
+      "type": "tutorial",
+      "difficulty": "easy",
+      "status": "available",
+      "requirements": {
+        "level": 1,
+        "location": null,
+        "items": []
+      },
+      "objectives": [
+        {
+          "id": "perform_scan",
+          "description": "Выполните AR сканирование",
+          "type": "ar_scan",
+          "target": 1,
+          "current": 0,
+          "completed": false
+        }
+      ],
+      "rewards": {
+        "experience": 50,
+        "tokens": 10,
+        "items": ["basic_scanner"]
+      },
+      "timeLimit": null
+    },
+    {
+      "id": "hex_explorer",
+      "title": "Исследователь гексов",
+      "description": "Приобретите ваш первый гексагональный тайл на карте",
+      "type": "exploration",
+      "difficulty": "easy",
+      "status": "available",
+      "requirements": {
+        "level": 1,
+        "location": null,
+        "items": []
+      },
+      "objectives": [
+        {
+          "id": "buy_hex",
+          "description": "Купите гексагональный тайл",
+          "type": "purchase_hex",
+          "target": 1,
+          "current": 0,
+          "completed": false
+        }
+      ],
+      "rewards": {
+        "experience": 100,
+        "tokens": 25,
+        "items": ["territory_marker"]
+      },
+      "timeLimit": null
+    },
+    {
+      "id": "corporate_agent",
+      "title": "Корпоративный агент",
+      "description": "Захватите 5 гексов в премиальной зоне для расширения корпоративного влияния",
+      "type": "corporate",
+      "difficulty": "medium",
+      "status": "locked",
+      "requirements": {
+        "level": 5,
+        "location": "london_city",
+        "items": ["advanced_scanner"]
+      },
+      "objectives": [
+        {
+          "id": "capture_premium_hexes",
+          "description": "Захватите премиальные гексы",
+          "type": "capture_hex",
+          "target": 5,
+          "current": 0,
+          "completed": false
+        }
+      ],
+      "rewards": {
+        "experience": 300,
+        "tokens": 100,
+        "items": ["corporate_badge", "premium_access_card"]
+      },
+      "timeLimit": 604800
+    }
+  ],
+  "questCategories": [
+    {
+      "id": "tutorial",
+      "name": "Обучение",
+      "description": "Базовые квесты для изучения игровых механик"
+    },
+    {
+      "id": "exploration",
+      "name": "Исследование",
+      "description": "Квесты на изучение мира и захват территорий"
+    },
+    {
+      "id": "corporate",
+      "name": "Корпоративные",
+      "description": "Сложные задания для продвинутых игроков"
+    }
+  ],
+  "metadata": {
+    "version": "1.0.0",
+    "lastUpdated": "2025-07-31T05:13:00Z",
+    "totalQuests": 3
+  }
+}

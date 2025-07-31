@@ -1,0 +1,74 @@
+{
+  "region": "moscow",
+  "center": {
+    "latitude": 55.7558,
+    "longitude": 37.6176
+  },
+  "lastUpdated": "2025-07-30T20:12:28.000Z",
+  "tiles": [
+    {
+      "h3Index": "89754e64992ffff",
+      "coordinates": { "lat": 55.7558, "lng": 37.6176 },
+      "ownershipStatus": "owned",
+      "price": 150,
+      "owner": "player_123",
+      "lastUpdated": 1722369148000
+    },
+    {
+      "h3Index": "89754e64993ffff",
+      "coordinates": { "lat": 55.7568, "lng": 37.6186 },
+      "ownershipStatus": "free",
+      "price": 100,
+      "owner": null,
+      "lastUpdated": 1722369148000
+    },
+    {
+      "h3Index": "89754e64994ffff",
+      "coordinates": { "lat": 55.7548, "lng": 37.6166 },
+      "ownershipStatus": "enemy",
+      "price": 200,
+      "owner": "player_456",
+      "lastUpdated": 1722369148000
+    },
+    {
+      "h3Index": "89754e64995ffff",
+      "coordinates": { "lat": 55.7578, "lng": 37.6196 },
+      "ownershipStatus": "free",
+      "price": 120,
+      "owner": null,
+      "lastUpdated": 1722369148000
+    },
+    {
+      "h3Index": "89754e64996ffff",
+      "coordinates": { "lat": 55.7538, "lng": 37.6156 },
+      "ownershipStatus": "owned",
+      "price": 180,
+      "owner": "player_123",
+      "lastUpdated": 1722369148000
+    },
+    {
+      "h3Index": "89754e64997ffff",
+      "coordinates": { "lat": 55.7588, "lng": 37.6206 },
+      "ownershipStatus": "free",
+      "price": 110,
+      "owner": null,
+      "lastUpdated": 1722369148000
+    },
+    {
+      "h3Index": "89754e64998ffff",
+      "coordinates": { "lat": 55.7528, "lng": 37.6146 },
+      "ownershipStatus": "enemy",
+      "price": 160,
+      "owner": "player_789",
+      "lastUpdated": 1722369148000
+    },
+    {
+      "h3Index": "89754e64999ffff",
+      "coordinates": { "lat": 55.7598, "lng": 37.6216 },
+      "ownershipStatus": "free",
+      "price": 90,
+      "owner": null,
+      "lastUpdated": 1722369148000
+    }
+  ]
+}

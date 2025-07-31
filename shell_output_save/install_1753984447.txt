@@ -1,0 +1,117 @@
+Downloading maplibre-gl@5.6.1: 0.00 B/7.85 MB
+Downloading maplibre-gl@5.6.1: 764.00 B/7.85 MB
+Downloading maplibre-gl@5.6.1: 1.29 MB/7.85 MB
+Progress: resolved 0, reused 0, downloaded 1, added 0
+319, reused 0, downloaded 9Progress: resolved 15, reused 0, downloaded 15, added 0
+3.9335, reused 0, downloaded 36, reused 0, downloaded 366.5558, reused 0, downloaded 5868, reused 0, downloaded 66
+   ╭──────────────────────────────────────────╮
+   │                                          │
+   │   Update available! 10.12.4 → 10.14.0.   │
+   │   Changelog: https://pnpm.io/v/10.14.0   │
+   │     To update, run: pnpm add -g pnpm     │
+   │                                          │
+   ╰──────────────────────────────────────────╯
+
+Downloading maplibre-gl@5.6.1: 6.55 MB/7.85 MB
+Progress: resolved 68, reused 0, downloaded 66, added 0
+Downloading maplibre-gl@5.6.1: 7.85 MB/7.85 MB, done
+9, reused 0, downloaded 68970701, reused 0, downloaded 713, reused 0, downloaded 7386, reused 0, downloaded 84Progress: resolved 116, reused 0, downloaded 114, added 0
+42, reused 0, downloaded 13976, reused 0, downloaded 172203, reused 0, downloaded 19915, reused 0, downloaded 21033, reused 0, downloaded 23151, reused 0, downloaded 24892, reused 0, downloaded 290332, reused 0, downloaded 33275, reused 0, downloaded 374422, reused 0, downloaded 42155, reused 0, downloaded 45496, reused 0, downloaded 467531, reused 0, downloaded 4868, reused 0, downloaded 49352, reused 0, downloaded 49867, reused 0, downloaded 52397, reused 0, downloaded 548624, reused 0, downloaded 56958, reused 0, downloaded 58281, reused 0, downloaded 613700, reused 0, downloaded 65618, reused 0, downloaded 66945, reused 0, downloaded 67462, reused 0, downloaded 70784, reused 0, downloaded 73893, reused 0, downloaded 745 WARN  4 deprecated subdependencies found: glob@7.2.3, inflight@1.0.6, source-map@0.8.0-beta.0, sourcemap-codec@1.4.8
+Progress: resolved 793, reused 0, downloaded 745, added 0
+9, reused 0, downloaded 756Packages: +757
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Progress: resolved 799, reused 0, downloaded 756, added 0
+Progress: resolved 799, reused 0, downloaded 756, added 13
+4Progress: resolved 799, reused 0, downloaded 756, added 242
+450655729Progress: resolved 799, reused 0, downloaded 756, added 757, done
+ WARN  Issues with peer dependencies found
+.
+└─┬ vite-plugin-pwa 0.20.5
+  └── ✕ unmet peer vite@"^3.1.0 || ^4.0.0 || ^5.0.0": found 6.2.6
+
+dependencies:
++ @hookform/resolvers 3.10.0
++ @radix-ui/react-accordion 1.2.4
++ @radix-ui/react-alert-dialog 1.1.7
++ @radix-ui/react-aspect-ratio 1.1.3
++ @radix-ui/react-avatar 1.1.4
++ @radix-ui/react-checkbox 1.1.5
++ @radix-ui/react-collapsible 1.1.4
++ @radix-ui/react-context-menu 2.2.7
++ @radix-ui/react-dialog 1.1.7
++ @radix-ui/react-dropdown-menu 2.1.7
++ @radix-ui/react-hover-card 1.1.7
++ @radix-ui/react-label 2.1.3
++ @radix-ui/react-menubar 1.1.7
++ @radix-ui/react-navigation-menu 1.2.6
++ @radix-ui/react-popover 1.1.7
++ @radix-ui/react-progress 1.1.3
++ @radix-ui/react-radio-group 1.2.4
++ @radix-ui/react-scroll-area 1.2.4
++ @radix-ui/react-select 2.1.7
++ @radix-ui/react-separator 1.1.3
++ @radix-ui/react-slider 1.2.4
++ @radix-ui/react-slot 1.2.0
++ @radix-ui/react-switch 1.1.4
++ @radix-ui/react-tabs 1.1.4
++ @radix-ui/react-toast 1.2.7
++ @radix-ui/react-toggle 1.1.3
++ @radix-ui/react-toggle-group 1.1.3
++ @radix-ui/react-tooltip 1.2.0
++ class-variance-authority 0.7.1
++ clsx 2.1.1
++ cmdk 1.0.0
++ date-fns 3.6.0
++ embla-carousel-react 8.6.0
++ h3-js 4.2.1
++ input-otp 1.4.2
++ lucide-react 0.364.0
++ maplibre-gl 5.6.1
++ next-themes 0.4.6
++ react 18.3.1
++ react-day-picker 8.10.1
++ react-dom 18.3.1
++ react-hook-form 7.55.0
++ react-resizable-panels 2.1.7
++ react-router-dom 6.30.0
++ recharts 2.15.2
++ sonner 1.7.4
++ tailwind-merge 2.6.0
++ tailwindcss-animate 1.0.7
++ vaul 1.1.2
++ workbox-precaching 7.3.0
++ workbox-routing 7.3.0
++ workbox-strategies 7.3.0
++ workbox-window 7.3.0
++ zod 3.24.2
+
+devDependencies:
++ @eslint/js 9.24.0
++ @types/node 22.14.1
++ @types/react 18.3.20
++ @types/react-dom 18.3.6
++ @types/react-router-dom 5.3.3
++ @vitejs/plugin-react 4.3.4
++ autoprefixer 10.4.20
++ eslint 9.24.0
++ eslint-plugin-react-hooks 5.2.0
++ eslint-plugin-react-refresh 0.4.19
++ gh-pages 6.3.0
++ globals 15.15.0
++ postcss 8.4.49
++ tailwindcss 3.4.16
++ typescript 5.6.3
++ typescript-eslint 8.29.1
++ vite 6.2.6
++ vite-plugin-pwa 0.20.5 (1.0.2 is available)
++ vite-plugin-source-info 1.0.0
+
+╭ Warning ─────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│   Ignored build scripts: esbuild.                                            │
+│   Run "pnpm approve-builds" to pick which dependencies should be allowed     │
+│   to run scripts.                                                            │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+Done in 19.2s using pnpm v10.12.4

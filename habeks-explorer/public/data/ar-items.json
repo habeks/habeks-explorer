@@ -1,0 +1,90 @@
+{
+  "items": [
+    {
+      "id": "ar_item_001",
+      "type": "weapon",
+      "name": "Кибер Клинок",
+      "rarity": "epic",
+      "description": "Высокотехнологичное оружие с плазменным лезвием",
+      "icon": "⚔️",
+      "value": 2500,
+      "captureTime": 7,
+      "spawnRegions": ["moscow_center", "business_district"],
+      "spawnChance": 0.15,
+      "effects": {
+        "attack": 85,
+        "speed": 15,
+        "energy": -5
+      }
+    },
+    {
+      "id": "ar_item_002",
+      "type": "artifact",
+      "name": "Квантовый Кристалл",
+      "rarity": "legendary",
+      "description": "Редкий артефакт с неизвестными свойствами",
+      "icon": "🔮",
+      "value": 8000,
+      "captureTime": 12,
+      "spawnRegions": ["moscow_center"],
+      "spawnChance": 0.03,
+      "effects": {
+        "energy": 50,
+        "special": "quantum_boost"
+      }
+    },
+    {
+      "id": "ar_item_003",
+      "type": "resource",
+      "name": "Энергокристалл",
+      "rarity": "uncommon",
+      "description": "Источник чистой энергии для устройств",
+      "icon": "💎",
+      "value": 800,
+      "captureTime": 4,
+      "spawnRegions": ["moscow_center", "industrial_zone", "business_district"],
+      "spawnChance": 0.35,
+      "effects": {
+        "energy": 25
+      }
+    },
+    {
+      "id": "ar_item_004",
+      "type": "armor",
+      "name": "Нано-броня",
+      "rarity": "rare",
+      "description": "Легкая, но прочная защита из наноматериалов",
+      "icon": "🛡️",
+      "value": 1500,
+      "captureTime": 6,
+      "spawnRegions": ["moscow_center", "business_district"],
+      "spawnChance": 0.20,
+      "effects": {
+        "defense": 45,
+        "weight": -10
+      }
+    },
+    {
+      "id": "ar_item_005",
+      "type": "consumable",
+      "name": "Стимпак",
+      "rarity": "common",
+      "description": "Медицинский стимулятор для быстрого восстановления",
+      "icon": "💊",
+      "value": 200,
+      "captureTime": 3,
+      "spawnRegions": ["moscow_center", "residential_area", "business_district", "industrial_zone"],
+      "spawnChance": 0.60,
+      "effects": {
+        "health": 50,
+        "duration": 30
+      }
+    }
+  ],
+  "metadata": {
+    "totalItems": 5,
+    "lastUpdated": "2025-07-31T05:00:00Z",
+    "version": "1.0.0",
+    "spawnCooldown": 300
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "locations": [
+    {
+      "id": "moscow_center",
+      "name": "Москва Центр",
+      "description": "Центральная часть Москвы с высокой концентрацией корпоративных зданий",
+      "latitude": 55.7558,
+      "longitude": 37.6176,
+      "radius": 2000,
+      "difficulty": "medium",
+      "rewards": {
+        "experience": 150,
+        "tokens": 50,
+        "items": ["advanced_scanner", "energy_cell"]
+      },
+      "hexTileCount": 127,
+      "averagePrice": 2500
+    },
+    {
+      "id": "london_city",
+      "name": "Лондон Сити",
+      "description": "Финансовый район Лондона с премиальными гексами",
+      "latitude": 51.5074,
+      "longitude": -0.1278,
+      "radius": 1500,
+      "difficulty": "high",
+      "rewards": {
+        "experience": 200,
+        "tokens": 75,
+        "items": ["quantum_scanner", "premium_drone"]
+      },
+      "hexTileCount": 91,
+      "averagePrice": 4500
+    },
+    {
+      "id": "tokyo_shibuya",
+      "name": "Токио Сибуя",
+      "description": "Технологический центр с уникальными AR возможностями",
+      "latitude": 35.6762,
+      "longitude": 139.6503,
+      "radius": 1800,
+      "difficulty": "expert",
+      "rewards": {
+        "experience": 300,
+        "tokens": 100,
+        "items": ["neural_interface", "holographic_projector"]
+      },
+      "hexTileCount": 169,
+      "averagePrice": 6000
+    }
+  ],
+  "metadata": {
+    "version": "1.0.0",
+    "lastUpdated": "2025-07-31T05:13:00Z",
+    "totalLocations": 3
+  }
+}
