@@ -32,11 +32,19 @@ export const MapView: React.FC<MapViewProps> = ({
 
     if (!mapContainer.current) return;
 
-    // ИСПРАВЛЕННАЯ инициализация карты MapLibre GL JS 
+    // МОБИЛЬНО-ОПТИМИЗИРОВАННАЯ инициализация MapLibre GL JS
     try {
-      console.log('🟦 Начало инициализации MapLibre карты...');
+      console.log('🟦 Мобильная инициализация MapLibre карты...');
       
-      map.current = new maplibregl.Map({
+      // Определяем мобильное устройство
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+                      ('ontouchstart' in window) ||
+                      (navigator.maxTouchPoints > 0);
+                      
+      console.log(`📱 Мобильное устройство: ${isMobile}`);
+      
+      // МОБИЛЬНО-ОПТИМИЗИРОВАННЫЕ настройки
+      const mapOptions = {
         container: mapContainer.current,
         style: {
           version: 8,
@@ -62,9 +70,23 @@ export const MapView: React.FC<MapViewProps> = ({
         doubleClickZoom: true,
         dragPan: true,
         dragRotate: false,
-        scrollZoom: true,
-        touchZoomRotate: true
-      });
+        scrollZoom: true, // ВКЛЮЧАЕМ для лучшей мобильной совместимости
+        touchZoomRotate: { around: 'center' }, // Улучшенные тач жесты
+        touchPitch: false,
+        boxZoom: false,
+        keyboard: false,
+        cooperativeGestures: false, // Отключаем кооперативные жесты для лучшей совместимости
+        preserveDrawingBuffer: true,
+        antialias: !isMobile, // Отключаем антиалиасинг на мобильных для производительности
+        failIfMajorPerformanceCaveat: false, // Не отключаем на слабых устройствах
+        
+        // Мобильная оптимизация
+        clickTolerance: isMobile ? 5 : 3, // Увеличиваем толерантность кликов на мобильных
+        dragPanThreshold: isMobile ? 10 : 0, // Порог для начала перетаскивания
+        performanceMetricsCollection: false // Отключаем сбор метрик
+      };
+      
+      map.current = new maplibregl.Map(mapOptions);
 
       console.log('✅ MapLibre карта создана успешно');
     } catch (error) {

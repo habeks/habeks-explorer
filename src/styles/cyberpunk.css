@@ -215,7 +215,7 @@ body {
   box-shadow: 0 0 20px var(--neon-pink);
 }
 
-/* Мобильные touch-оптимизированные кнопки */
+/* МОБИЛЬНО-ОПТИМИЗИРОВАННЫЕ кнопки */
 .btn-neon.mobile-touch {
   min-height: 56px; /* Минимальная высота для touch */
   min-width: 120px;
@@ -229,6 +229,9 @@ body {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   user-select: none;
+  /* Мобильная оптимизация */
+  -webkit-tap-highlight-color: rgba(0, 212, 255, 0.3);
+  cursor: pointer;
 }
 
 .btn-neon.mobile-touch:active {
@@ -240,21 +243,27 @@ body {
   opacity: 0.6;
   cursor: not-allowed;
   transform: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
-/* Улучшенные AR объекты для touch */
+/* МОБИЛЬНО-ОПТИМИЗИРОВАННЫЕ AR объекты */
 .ar-object {
   touch-action: manipulation;
   -webkit-touch-callout: none;
   min-width: 80px;
   min-height: 80px;
+  /* Мобильная оптимизация */
+  -webkit-tap-highlight-color: rgba(0, 212, 255, 0.3);
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .ar-object:active {
   transform: translate(-50%, -50%) scale(0.95);
 }
 
-/* Touch-friendly размеры на мобильных */
+/* МОБИЛЬНО-FRIENDLY размеры */
 @media (max-width: 768px) {
   .ar-object {
     min-width: 100px;
@@ -265,6 +274,48 @@ body {
     min-height: 64px;
     font-size: 1.1rem;
     padding: 1.25rem 2rem;
+  }
+  
+  /* Оптимизация навигации */
+  .tab-button {
+    min-height: 48px;
+    min-width: 48px;
+    -webkit-tap-highlight-color: rgba(0, 212, 255, 0.3);
+  }
+  
+  /* Оптимизация контролов */
+  .cyberpunk-button {
+    min-height: 48px;
+    padding: 1rem 1.5rem;
+    -webkit-tap-highlight-color: rgba(0, 212, 255, 0.3);
+    touch-action: manipulation;
+  }
+}
+
+/* МОБИЛЬНАЯ ОПТИМИЗАЦИЯ ДЛЯ МАЛЫХ ЭКРАНОВ */
+@media (max-width: 480px) {
+  .ar-object {
+    min-width: 88px;
+    min-height: 88px;
+  }
+  
+  .btn-neon.mobile-touch {
+    min-height: 56px;
+    font-size: 1rem;
+    padding: 1rem 1.5rem;
+    border-width: 2px;
+  }
+  
+  .tab-button {
+    min-height: 44px;
+    min-width: 44px;
+    font-size: 0.875rem;
+  }
+  
+  .cyberpunk-button {
+    min-height: 44px;
+    padding: 0.875rem 1.25rem;
+    font-size: 0.875rem;
   }
 }
 
@@ -691,25 +742,34 @@ body {
   backdrop-filter: blur(4px);
 }
 
-/* Принудительная вертикальная ориентация */
+/* УДАЛЕНО: Принудительная вертикальная ориентация может конфликтовать с мобильными браузерами */
+/* Заменено на адаптивную поддержку ландшафтной ориентации */
 @media screen and (orientation: landscape) and (max-width: 900px) {
-  body {
-    transform: rotate(90deg);
-    transform-origin: left top;
-    width: 100vh;
-    height: 100vw;
-    overflow-x: hidden;
-    position: absolute;
-    top: 100%;
-    left: 0;
-  }
-
-  /* Корректировка элементов управления */
+  /* Улучшенная поддержка ландшафтной ориентации без принудительного поворота */
   .tab-navigation {
-    width: 100%;
+    position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
+    z-index: 50;
+    height: 60px;
+  }
+  
+  .tab-button {
+    padding: 0.5rem;
+    font-size: 0.75rem;
+    min-height: 44px;
+  }
+  
+  /* Оптимизация для низких экранов */
+  .cyberpunk-hud-top {
+    top: 10px;
+    left: 10px;
+    right: 10px;
+  }
+  
+  .cyberpunk-hud-bottom {
+    bottom: 70px;
   }
 }
 

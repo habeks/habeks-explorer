@@ -79,15 +79,26 @@ export const ARCollectionPage: React.FC<ARCollectionPageProps> = ({
     };
   }, [isMoving, activeCapture, movementThreshold]);
 
-  // УПРОЩЕННЫЙ запуск AR камеры - базовая логика
+  // МОБИЛЬНО-ОПТИМИЗИРОВАННЫЙ запуск AR камеры
   const startCamera = async () => {
     setLoading(true);
     setError(null);
     
-    console.log('📱 Начинаем запуск AR камеры...');
+    console.log('📱 Мобильный запуск AR камеры...');
     
-    // Простая проверка HTTPS для production
-    if (window.location.protocol !== 'https:' && window.location.hostname !== 'localhost') {
+    // Определяем мобильное устройство
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+                    ('ontouchstart' in window) ||
+                    (navigator.maxTouchPoints > 0);
+                    
+    console.log(`📱 Мобильное устройство: ${isMobile}`);
+    
+    // Проверка HTTPS (обязательно для production) с улучшенными исключениями
+    if (window.location.protocol !== 'https:' && 
+        window.location.hostname !== 'localhost' && 
+        window.location.hostname !== '127.0.0.1' &&
+        !window.location.hostname.includes('.github.io') &&
+        !window.location.hostname.includes('local')) {
       const errorMsg = '🔒 AR камера требует HTTPS. Откройте сайт через https://';
       setError(errorMsg);
       setNotification(errorMsg);
@@ -96,9 +107,9 @@ export const ARCollectionPage: React.FC<ARCollectionPageProps> = ({
     }
     
     try {
-      setNotification('🚀 Инициализация AR-камеры...');
+      setNotification('🚀 Мобильная инициализация AR-камеры...');
       
-      // Простая проверка поддержки API
+      // Мобильная проверка поддержки API
       if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
         throw new Error('Камера не поддерживается в вашем браузере');
       }
@@ -114,62 +125,107 @@ export const ARCollectionPage: React.FC<ARCollectionPageProps> = ({
         currentStreamRef.current = null;
       }
       
-      // ПРОСТОЙ конфиг для максимальной совместимости
-      const constraints = {
+      // МОБИЛЬНО-ОПТИМИЗИРОВАННЫЕ констрейнты камеры
+      const baseConstraints = {
         video: {
-          facingMode: 'environment', // Задняя камера
-          width: { ideal: 640 },
-          height: { ideal: 480 }
+          facingMode: isMobile ? 'environment' : 'environment', // Убрали exact для лучшей совместимости
+          width: isMobile ? { ideal: 1280, min: 640, max: 1920 } : { ideal: 640 },
+          height: isMobile ? { ideal: 720, min: 480, max: 1080 } : { ideal: 480 },
+          frameRate: isMobile ? { ideal: 30, min: 15, max: 30 } : { ideal: 24 },
+          aspectRatio: { ideal: 16/9 } // Добавляем предпочитаемое соотношение сторон
         },
         audio: false
       };
       
-      console.log('📷 Запрашиваем доступ к камере...');
+      console.log('📷 Мобильный запрос доступа к камере...');
       
-      // Базовый вызов getUserMedia
-      const stream = await navigator.mediaDevices.getUserMedia(constraints);
+      let stream;
+      try {
+        // Пробуем оптимальные настройки
+        stream = await navigator.mediaDevices.getUserMedia(baseConstraints);
+      } catch (highQualityError) {
+        console.warn('⚠️ Оптимальные настройки не поддерживаются, пробуем базовые:', highQualityError);
+        
+        // Fallback к базовым настройкам
+        const fallbackConstraints = {
+          video: {
+            facingMode: 'environment',
+            width: { ideal: 640 },
+            height: { ideal: 480 }
+          },
+          audio: false
+        };
+        
+        try {
+          stream = await navigator.mediaDevices.getUserMedia(fallbackConstraints);
+        } catch (fallbackError) {
+          console.warn('⚠️ Базовые настройки не поддерживаются, пробуем минимальные:', fallbackError);
+          
+          // Минимальные настройки
+          stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+        }
+      }
       
       if (!stream) {
         throw new Error('Не удалось получить видеопоток');
       }
       
       currentStreamRef.current = stream;
-      console.log('✅ Видеопоток получен успешно');
+      console.log('✅ Мобильный видеопоток получен успешно');
       
-      // Настраиваем видео
+      // Мобильная настройка видео
       video.srcObject = stream;
       video.muted = true;
       video.playsInline = true;
       video.autoplay = true;
+      video.controls = false;
+      video.setAttribute('playsinline', 'true'); // Особенно важно для iOS
+      video.setAttribute('webkit-playsinline', 'true'); // Старые версии iOS
       
-      // Простое ожидание загрузки и запуск
-      video.onloadedmetadata = () => {
-        video.play().then(() => {
-          console.log('✅ Видео запущено');
-          setIsCameraActive(true);
-          generateARObjects();
-          setNotification('✅ AR камера активна! Нажмите на объекты для сбора');
-        }).catch(playError => {
-          console.warn('⚠️ Нужно взаимодействие пользователя:', playError);
-          setNotification('💆 Нажмите на экран для активации камеры');
-          setIsCameraActive(true);
-          generateARObjects();
-        });
+      // Мобильно-оптимизированный запуск
+      const startVideo = () => {
+        const playPromise = video.play();
+        
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            console.log('✅ Мобильное видео запущено');
+            setIsCameraActive(true);
+            generateARObjects();
+            setNotification('✅ Мобильная AR камера активна! Нажмите на объекты');
+          }).catch(playError => {
+            console.warn('⚠️ Мобильное воспроизведение требует взаимодействия:', playError);
+            setNotification('💆 Коснитесь экрана для активации AR камеры');
+            setIsCameraActive(true);
+            generateARObjects();
+          });
+        }
       };
       
-    } catch (error) {
-      console.error('❌ Ошибка запуска AR камеры:', error);
+      // Ожидание загрузки метаданных
+      video.onloadedmetadata = startVideo;
       
-      let errorMsg = 'Ошибка камеры';
+      // Немедленная попытка запуска если метаданные уже загружены
+      if (video.readyState >= 2) {
+        startVideo();
+      }
+      
+    } catch (error) {
+      console.error('❌ Ошибка мобильного запуска AR камеры:', error);
+      
+      let errorMsg = 'Ошибка мобильной камеры';
       
       if (error instanceof Error) {
         const msg = error.message;
-        if (msg.includes('Permission') || msg.includes('NotAllowed')) {
-          errorMsg = '📵 Разрешите доступ к камере в настройках браузера';
-        } else if (msg.includes('NotFound')) {
-          errorMsg = '📷 Камера не обнаружена. Проверьте подключение';
+        if (msg.includes('Permission') || msg.includes('NotAllowed') || msg.includes('NotAllowedError')) {
+          errorMsg = '📵 Мобильный браузер: Разрешите доступ к камере в настройках';
+        } else if (msg.includes('NotFound') || msg.includes('NotFoundError')) {
+          errorMsg = '📷 Камера не обнаружена на мобильном устройстве';
+        } else if (msg.includes('NotReadable') || msg.includes('NotReadableError')) {
+          errorMsg = '🔍 Камера занята другим приложением. Закройте другие камера-приложения';
+        } else if (msg.includes('Overconstrained') || msg.includes('OverconstrainedError')) {
+          errorMsg = '⚙️ Мобильная камера не поддерживает запрошенные настройки';
         } else {
-          errorMsg = `⚠️ ${msg}`;
+          errorMsg = `⚠️ Мобильная ошибка: ${msg}`;
         }
       }
       

@@ -17,14 +17,22 @@ html, body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   
-  /* Предотвращение масштабирования на мобильных */
-  touch-action: manipulation;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
+  /* Мобильная оптимизация - УЛУЧШЕНО */
+  touch-action: manipulation; /* Улучшенное управление */
+  -webkit-touch-callout: none; /* Отключаем контекстное меню */
+  -webkit-user-select: none; /* Предотвращаем выделение текста */
   -khtml-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  
+  /* Поддержка мобильных браузеров */
+  -webkit-tap-highlight-color: rgba(0, 212, 255, 0.3);
+  -webkit-overflow-scrolling: touch;
+  
+  /* Предотвращаем масштабирование при двойном клике */
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
 }
 
 #root {
@@ -45,10 +53,14 @@ html, body {
   }
 }
 
-/* Оптимизация для WebKit */
+/* Оптимизация для WebKit и мобильных */
 input, button, select, textarea {
   -webkit-appearance: none;
   border-radius: 0;
+  /* Мобильные touch события */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(0, 212, 255, 0.3);
+  cursor: pointer;
 }
 
 /* Оптимизация скроллбаров */
@@ -131,6 +143,11 @@ input, button, select, textarea {
   cursor: pointer;
   outline: none;
   transition: all 0.3s ease;
+  /* Мобильная оптимизация */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(0, 212, 255, 0.3);
+  min-height: 44px;
+  min-width: 44px;
 }
 
 .tab-button.active {
